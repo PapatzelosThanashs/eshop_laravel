@@ -24,7 +24,14 @@ Route::post('/admin/auth',[AdminController::class,'auth'])->name('admin.auth');
 
 Route::middleware(['AdminAuth'])->group(function () {
     Route::get('/admin/dashboard',[AdminController::class,'dashboard']);
-    Route::get('/admin/category',[CategoryController::class,'index']);
-    Route::get('/admin/manage_category',[CategoryController::class,'manage_category']);
     Route::get('/admin/logout',[AdminController::class,'logout']);
+    /* crud admin category routes */
+    Route::get('/admin/category',[CategoryController::class,'index']);
+    Route::get('/admin/category/create',[CategoryController::class,'create']);
+    Route::post('/admin/category',[CategoryController::class,'store']);
+    Route::delete('/admin/category/{category_id}',[CategoryController::class,'delete']);
+    Route::get('/admin/category/{category_id}',[CategoryController::class,'show']);
+    Route::patch('/admin/category/{category}',[CategoryController::class,'update']);
+    
+    
 });

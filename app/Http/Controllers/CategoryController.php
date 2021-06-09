@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\Models\Category;
 
 use Illuminate\Http\Request;
 
@@ -9,14 +10,63 @@ class CategoryController extends Controller
 
     public function index()
     {
-        return view('admin.category');
+        $categories= Category::all();
+        return view('admin.category',compact('categories'));
     }
 
 
-    public function manage_category()
+    public function create()
     {
-        return view('admin.manage_category');
+        return view('admin.create');
     }
 
-   
+    public function store(Request $request)
+    {
+     
+        $request->validate([
+        'category_name' => 'required',
+        'category_slug' => 'required|unique:categories',
+    ]);
+
+        Category::create([
+        'category_name' => $request->category_name,
+        'category_slug' => $request->category_slug,
+    ]);
+
+        $request->session()->flash('message','Category added');
+
+        return redirect('admin/category');
+    }
+ 
+
+    public function delete(Category $category_id)
+    {
+        Category::destroy($category_id->id);
+        request()->session()->flash('message','Category deleted');
+        return back();
+    }
+
+    public function show(Category $category_id)
+    {
+      
+       $category=Category::where(['id'=>$category_id->id])->first();
+       
+    
+        return view('admin.show',compact('category'));
+    }
+
+    public function update(Category $category)
+    {
+       
+        $data=request()->validate([
+        'category_name' => 'required',
+        'category_slug' => 'required',
+    ]);
+
+        $category->update($data);
+
+        request()->session()->flash('message','Category edited');
+
+        return redirect('admin/category');
+    }
 }
