@@ -70,6 +70,10 @@
                             <a href="{{route('coupon.index')}}">
                             <i class="fas fa-ticket-alt"></i>Coupon</a>
                         </li>
+                        <li class="@yield('active_size')">
+                            <a href="{{route('size.index')}}">
+                            <i class="fas fa-weight"></i>Size</a>
+                        </li>
                     </ul>
                 </div>
             </nav>
@@ -97,6 +101,10 @@
                         <li class="@yield('active_coupon')">
                             <a href="{{route('coupon.index')}}">
                             <i class="fas fa-ticket-alt"></i>Coupon</a>
+                        </li>
+                        <li class="@yield('active_size')">
+                            <a href="{{route('size.index')}}">
+                            <i class="fas fa-weight"></i>Size</a>
                         </li>
                     </ul>
                 </nav>

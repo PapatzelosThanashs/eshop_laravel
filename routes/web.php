@@ -3,6 +3,7 @@
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CouponController;
+use App\Http\Controllers\SizeController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -26,6 +27,7 @@ Route::post('/admin/auth',[AdminController::class,'auth'])->name('admin.auth');
 Route::middleware(['AdminAuth'])->group(function () {
     Route::get('/admin/dashboard',[AdminController::class,'dashboard'])->name('dashboard.index');
     Route::get('/admin/logout',[AdminController::class,'logout']);
+
     /* crud admin category routes */
     Route::get('/admin/category',[CategoryController::class,'index'])->name('category.index');
     Route::get('/admin/category/create',[CategoryController::class,'create']);
@@ -43,6 +45,15 @@ Route::middleware(['AdminAuth'])->group(function () {
     Route::get('/admin/coupon/{coupon_id}',[CouponController::class,'show']);
     Route::patch('/admin/coupon/{coupon}',[CouponController::class,'update']);
     Route::get('/admin/coupon/{coupon_id}/{type}',[CouponController::class,'type']);
+
+    /* crud admin size routes */
+    Route::get('/admin/size',[SizeController::class,'index'])->name('size.index');
+    Route::get('/admin/size/create',[SizeController::class,'create']);
+    Route::post('/admin/size',[SizeController::class,'store']);
+    Route::delete('/admin/size/{size_id}',[SizeController::class,'delete']);
+    Route::get('/admin/size/{size_id}',[SizeController::class,'show']);
+    Route::patch('/admin/size/{size}',[SizeController::class,'update']);
+    Route::get('/admin/size/{size_id}/{status}',[SizeController::class,'status']);
     
     
 });
