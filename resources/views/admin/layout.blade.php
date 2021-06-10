@@ -10,7 +10,7 @@
     <meta name="keywords" content="au theme template">
 
     <!-- Title Page-->
-    <title>Login</title>
+    <title>@yield('title')</title>
 
     <!-- Fontfaces CSS-->
     <link href="{{asset('admin_assets/css/font-face.css" rel="stylesheet')}}" media="all">
@@ -94,22 +94,22 @@
         <aside class="menu-sidebar d-none d-lg-block">
             <div class="logo">
                 <a href="#">
-                    <img src="images/icon/logo.png" alt="Cool Admin" />
+                    <img src="{{asset('admin_assets/images/icon/logo.png')}}" alt="Cool Admin" />
                 </a>
             </div>
             <div class="menu-sidebar__content js-scrollbar1">
                 <nav class="navbar-sidebar">
                     <ul class="list-unstyled navbar__list">
                         <li>
-                            <a href="dashboard">
+                            <a href="{{route('dashboard.index')}}">
                                 <i class="fas fa-chart-bar"></i>Dashboard</a>
                         </li>
                         <li>
-                            <a href="category">
+                            <a href="{{route('category.index')}}">
                             <i class="fas fa-align-left"></i>Category</a>
                         </li>
                         <li>
-                            <a href="coupon">
+                            <a href="{{route('coupon.index')}}">
                             <i class="fas fa-ticket-alt"></i>Coupon</a>
                         </li>
                     </ul>

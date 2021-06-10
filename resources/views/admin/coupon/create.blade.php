@@ -1,5 +1,5 @@
 @extends('admin.layout')
-
+@section('title', 'Create Coupon')
 @section('content')
 
     <h1>Manage Coupon</h1>

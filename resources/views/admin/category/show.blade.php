@@ -1,5 +1,5 @@
 @extends('admin.layout')
-
+@section('title', 'Edit Category')
 @section('content')
 
     <h1>Manage Category</h1>
