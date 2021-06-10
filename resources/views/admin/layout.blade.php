@@ -106,6 +106,10 @@
                             <a href="{{route('size.index')}}">
                             <i class="fas fa-weight"></i>Size</a>
                         </li>
+                        <li class="@yield('active_color')">
+                            <a href="{{route('color.index')}}">
+                            <i class="fas fa-paint-brush"></i>Color</a>
+                        </li>
                     </ul>
                 </nav>
             </div>

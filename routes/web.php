@@ -4,6 +4,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CouponController;
 use App\Http\Controllers\SizeController;
+use App\Http\Controllers\ColorController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -54,6 +55,15 @@ Route::middleware(['AdminAuth'])->group(function () {
     Route::get('/admin/size/{size_id}',[SizeController::class,'show']);
     Route::patch('/admin/size/{size}',[SizeController::class,'update']);
     Route::get('/admin/size/{size_id}/{status}',[SizeController::class,'status']);
+
+     /* crud admin color routes */
+     Route::get('/admin/color',[ColorController::class,'index'])->name('color.index');
+     Route::get('/admin/color/create',[ColorController::class,'create']);
+     Route::post('/admin/color',[ColorController::class,'store']);
+     Route::delete('/admin/color/{color_id}',[ColorController::class,'delete']);
+     Route::get('/admin/color/{color_id}',[ColorController::class,'show']);
+     Route::patch('/admin/color/{color}',[ColorController::class,'update']);
+     Route::get('/admin/color/{color_id}/{status}',[ColorController::class,'status']);
     
     
 });
