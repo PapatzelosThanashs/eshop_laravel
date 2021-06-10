@@ -69,4 +69,18 @@ class CategoryController extends Controller
 
         return redirect('admin/category');
     }
+
+
+    public function type(Category $category_id,$type)
+    {
+       
+        
+
+        $type=!$type;
+        $category_id->update(['type'=>$type]);
+
+        request()->session()->flash('message','Category type updated');
+
+        return redirect('admin/category');
+    }
 }

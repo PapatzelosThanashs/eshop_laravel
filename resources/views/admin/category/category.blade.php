@@ -1,5 +1,6 @@
 @extends('admin.layout')
 @section('title', 'Category')
+@section('active_category','active')
 @section('content')
 
     <h1>Category</h1>
@@ -38,9 +39,14 @@
                                 @csrf
                                 <button type="submit" class="btn btn-danger">Delete</button>
                             </form>
-
                             
-                             <a href="{{url('/admin/category/')}}/{{$category->id}}"> <button type="submit" class="btn btn-primary">Edit</button></a>
+                            @if($category->type==false)
+                            <a href="{{url('/admin/category/')}}/{{$category->id}}/{{$category->type}}"> <button type="submit" class="btn btn-success">Activate</button></a>
+                            @else
+                            <a href="{{url('/admin/category/')}}/{{$category->id}}/{{$category->type}}"> <button type="submit" class="btn btn-warning">Deactivate</button></a>
+                            @endif
+
+                            <a href="{{url('/admin/category/')}}/{{$category->id}}"> <button type="submit" class="btn btn-primary">Edit</button></a>
                          
                             </td>
                         </tr>

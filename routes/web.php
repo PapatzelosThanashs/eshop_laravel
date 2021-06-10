@@ -33,6 +33,7 @@ Route::middleware(['AdminAuth'])->group(function () {
     Route::delete('/admin/category/{category_id}',[CategoryController::class,'delete']);
     Route::get('/admin/category/{category_id}',[CategoryController::class,'show']);
     Route::patch('/admin/category/{category}',[CategoryController::class,'update']);
+    Route::get('/admin/category/{category_id}/{type}',[CategoryController::class,'type']);
 
     /* crud admin coupon routes */
     Route::get('/admin/coupon',[CouponController::class,'index'])->name('coupon.index');
@@ -41,6 +42,7 @@ Route::middleware(['AdminAuth'])->group(function () {
     Route::delete('/admin/coupon/{coupon_id}',[CouponController::class,'delete']);
     Route::get('/admin/coupon/{coupon_id}',[CouponController::class,'show']);
     Route::patch('/admin/coupon/{coupon}',[CouponController::class,'update']);
+    Route::get('/admin/coupon/{coupon_id}/{type}',[CouponController::class,'type']);
     
     
 });

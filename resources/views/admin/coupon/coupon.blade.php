@@ -1,5 +1,6 @@
 @extends('admin.layout')
 @section('title', 'Coupon')
+@section('active_coupon','active')
 @section('content')
 
     <h1>Coupon</h1>
@@ -41,6 +42,11 @@
                                 <button type="submit" class="btn btn-danger">Delete</button>
                             </form>
 
+                            @if($coupon->type==false)
+                            <a href="{{url('/admin/coupon/')}}/{{$coupon->id}}/{{$coupon->type}}"> <button type="submit" class="btn btn-success">Activate</button></a>
+                            @else
+                            <a href="{{url('/admin/coupon/')}}/{{$coupon->id}}/{{$coupon->type}}"> <button type="submit" class="btn btn-warning">Deactivate</button></a>
+                            @endif
                             
                              <a href="{{url('/admin/coupon/')}}/{{$coupon->id}}"> <button type="submit" class="btn btn-primary">Edit</button></a>
                          
