@@ -11,13 +11,13 @@ class CategoryController extends Controller
     public function index()
     {
         $categories= Category::all();
-        return view('admin.category',compact('categories'));
+        return view('admin.category.category',compact('categories'));
     }
 
 
     public function create()
     {
-        return view('admin.create');
+        return view('admin.category.create');
     }
 
     public function store(Request $request)
@@ -52,7 +52,7 @@ class CategoryController extends Controller
        $category=Category::where(['id'=>$category_id->id])->first();
        
     
-        return view('admin.show',compact('category'));
+        return view('admin.category.show',compact('category'));
     }
 
     public function update(Category $category)

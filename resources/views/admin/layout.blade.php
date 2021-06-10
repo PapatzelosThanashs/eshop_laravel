@@ -108,6 +108,10 @@
                             <a href="category">
                             <i class="fas fa-align-left"></i>Category</a>
                         </li>
+                        <li>
+                            <a href="coupon">
+                            <i class="fas fa-ticket-alt"></i>Coupon</a>
+                        </li>
                     </ul>
                 </nav>
             </div>
