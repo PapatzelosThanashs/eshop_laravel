@@ -110,6 +110,10 @@
                             <a href="{{route('color.index')}}">
                             <i class="fas fa-paint-brush"></i>Color</a>
                         </li>
+                        <li class="@yield('active_product')">
+                            <a href="{{route('product.index')}}">
+                            <i class="fas fa-archive"></i>Product</a>
+                        </li>
                     </ul>
                 </nav>
             </div>

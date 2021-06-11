@@ -5,6 +5,7 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CouponController;
 use App\Http\Controllers\SizeController;
 use App\Http\Controllers\ColorController;
+use App\Http\Controllers\ProductController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -64,6 +65,15 @@ Route::middleware(['AdminAuth'])->group(function () {
      Route::get('/admin/color/{color_id}',[ColorController::class,'show']);
      Route::patch('/admin/color/{color}',[ColorController::class,'update']);
      Route::get('/admin/color/{color_id}/{status}',[ColorController::class,'status']);
+
+     /* crud admin product routes */
+     Route::get('/admin/product',[ProductController::class,'index'])->name('product.index');
+     Route::get('/admin/product/create',[ProductController::class,'create']);
+     Route::post('/admin/product',[ProductController::class,'store']);
+     Route::delete('/admin/product/{product_id}',[ProductController::class,'delete']);
+     Route::get('/admin/product/{product_id}',[ProductController::class,'show']);
+     Route::patch('/admin/product/{product}',[ProductController::class,'update']);
+     Route::get('/admin/product/{product_id}/{status}',[ProductController::class,'status']);
     
     
 });

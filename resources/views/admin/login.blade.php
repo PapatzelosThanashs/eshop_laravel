@@ -73,9 +73,11 @@
                                     <a href="#">Sign Up Here</a>
                                 </p>
                             </div>
+                            @if(session('error'))
                             <div class="alert alert-danger">
-                            {{session('error')}}
+                            {{session('error')}} 
                             </div>
+                            @endif
                         </div>
                     </div>
                 </div>
