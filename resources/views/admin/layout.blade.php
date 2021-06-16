@@ -33,6 +33,14 @@
     <!-- Main CSS-->
     <link href="{{asset('admin_assets/css/theme.css')}}" rel="stylesheet" media="all">
 
+   
+
+    <!-- admin attribute dynamic form custom js-->   
+    <script src="{{asset('admin_assets/js/attribute_dynamic_form.js')}}"> </script>
+    
+
+    
+
 </head>
 
 <body >
@@ -192,9 +200,8 @@
         </div>
         <!-- END PAGE CONTAINER-->
 
-    </div>
-
-    <!-- Jquery JS-->
+</div>
+ <!-- Jquery JS-->
     <script src="{{asset('admin_assets/vendor/jquery-3.2.1.min.js')}}"></script>
     <!-- Bootstrap JS-->
     <script src="{{asset('admin_assets/vendor/bootstrap-4.1/popper.min.js')}}"></script>
@@ -212,9 +219,8 @@
     <script src="{{asset('admin_assets/vendor/circle-progress/circle-progress.min.js')}}"></script>
     <script src="{{asset('admin_assets/vendor/perfect-scrollbar/perfect-scrollbar.js')}}"></script>
     <script src="{{asset('admin_assets/vendor/chartjs/Chart.bundle.min.js')}}"></script>
-    <script src="{{asset('admin_assets/vendor/select2/select2.min.js')}}">
-    </script>
-
+    <script src="{{asset('admin_assets/vendor/select2/select2.min.js')}}"></script>
+    
     <!-- Main JS-->
     <script src="{{asset('admin_assets/js/main.js')}}"></script>
 

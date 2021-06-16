@@ -72,15 +72,15 @@ class CouponController extends Controller
         return redirect('admin/coupon');
     }
 
-    public function type(Coupon $coupon_id,$type)
+    public function status(Coupon $coupon_id,$status)
     {
        
         
 
-        $type=!$type;
-        $coupon_id->update(['type'=>$type]);
+        $status=!$status;
+        $coupon_id->update(['status'=>$status]);
 
-        request()->session()->flash('message','Coupon type updated');
+        request()->session()->flash('message','Coupon status updated');
 
         return redirect('admin/coupon');
     }

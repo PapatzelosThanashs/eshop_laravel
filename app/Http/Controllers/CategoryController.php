@@ -71,15 +71,15 @@ class CategoryController extends Controller
     }
 
 
-    public function type(Category $category_id,$type)
+    public function status(Category $category_id,$status)
     {
        
-        
+        //dd($status);
 
-        $type=!$type;
-        $category_id->update(['type'=>$type]);
+        $status=!$status;
+        $category_id->update(['status'=>$status]);
 
-        request()->session()->flash('message','Category type updated');
+        request()->session()->flash('message','Category status updated');
 
         return redirect('admin/category');
     }

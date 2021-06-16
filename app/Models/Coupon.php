@@ -13,6 +13,6 @@ class Coupon extends Model
         'coupon_title',
         'coupon_code',
         'coupon_value',
-        'type',
+        'status',
     ];
 }

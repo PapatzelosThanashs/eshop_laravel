@@ -12,6 +12,11 @@ class Category extends Model
     protected $fillable = [
         'category_name',
         'category_slug',
-        'type',
+        'status',
     ];
+
+    public function productAttr()
+    {
+        return $this->belongsTo(ProductAttributes::class);
+    }
 }

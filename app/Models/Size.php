@@ -12,4 +12,6 @@ class Size extends Model
         'size',
         'status',
     ];
+
+  
 }

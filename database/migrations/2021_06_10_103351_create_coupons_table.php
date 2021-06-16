@@ -18,7 +18,7 @@ class CreateCouponsTable extends Migration
             $table->string('coupon_title');
             $table->string('coupon_code');
             $table->string('coupon_value');
-            $table->boolean('type')->default(false);
+            $table->boolean('status')->default(false);
             $table->timestamps();
         });
     }

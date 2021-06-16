@@ -24,4 +24,11 @@ class Product extends Model
         'status',
 
     ];
+
+    public function attribute()
+    {
+        return $this->HasMany(ProductAttributes::class,'products_id');
+    }
+    
+
 }

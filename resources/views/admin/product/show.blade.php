@@ -7,14 +7,15 @@
     <button type="button" class="btn btn-success" style="margin-bottom:10px;margin-top:10px;">Back</button>
     </a>
 
-    <div class="row m-t-30">
-        <div class="col-md-12">
-            <div class="table-responsive table--no-card m-b-30">
-                <div class="card">
-                    <div class="card-body">
-                        <form action="{{url('/admin/product/')}}/{{$product->id}}" method="post" enctype="multipart/form-data">
-                            @method('PATCH')
-                            @csrf
+    <form action="{{url('/admin/product/')}}/{{$product->id}}" method="post" enctype="multipart/form-data">
+        @method('PATCH')
+        @csrf
+        <div class="row m-t-30">
+            <div class="col-md-12">
+                <div class="table--no-card m-b-30">
+                    <div class="card">
+                        <div class="card-body">
+
                             <!--Name -->
                             <div class="form-group">
                                 <label for="name" class="control-label mb-1">Product</label>
@@ -37,8 +38,9 @@
                             </div>
                             <!--Image -->
                             <div class="form-group">
-                            <label for="image" class="control-label mb-1">Image</label>
-                                <input  id="image" name="image" type="file" class="form-control" aria-required="true" aria-invalid="false" required >
+                            <label for="image" class="control-label mb-1">Change Image</label>
+                                <img style="width:50px;height:50px" src="{{ asset('storage/product_photo/'.$product->image) }}" alt="Italian Trulli">
+                                <input  id="image" name="image" type="file" class="form-control" aria-required="true" aria-invalid="false"   >
                                 @error('image')
                                 <div class="alert alert-danger" role="alert">
                                     {{$message}}
@@ -138,18 +140,25 @@
 								</div>
                                 @enderror
                             </div>
-
-                            
-                            <div>
-                                <button id="payment-button" type="submit" class="btn btn-lg btn-info btn-block">
-                                    <i class="fa fa-check" aria-hidden="true"></i>
-                                    <span id="payment-button-amount">Submit</span>
-                                </button>
-                            </div>
-                        </form>
+                        </div>
                     </div>
                 </div>
-            </div>
+            </div>  
         </div>  
-    </div>        
+          @if(session('message'))
+            <div class="alert alert-success" role="alert">
+        {{session('message')}}  
+            </div>
+        @endif
+
+        @include('admin.product.attributes')
+                                   
+        <div>
+            <button id="payment-button" type="submit" class="btn btn-lg btn-info btn-block">
+                <i class="fa fa-check" aria-hidden="true"></i>
+                <span id="payment-button-amount">Submit</span>
+            </button>
+        </div>
+                            
+     </form>
 @endsection
