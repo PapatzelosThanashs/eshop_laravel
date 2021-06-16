@@ -23,11 +23,16 @@ class ProductController extends Controller
 
     public function create()
     {
-        
         $categories=Category::where(['status'=>1])->get();
         $colors= Color::where(['status'=>1])->get();
         $sizes= Size::where(['status'=>1])->get();
         $productattributes=[];
+       
+        /* validate that there is at least 1 active category at crating new product*/
+        if($categories->isEmpty() ){
+            request()->session()->flash('message','Error.Please activate and attach a Category');
+        }
+     
         return view('admin.product.create',compact('categories','productattributes','colors','sizes'));
     }
 
@@ -59,10 +64,10 @@ class ProductController extends Controller
            
         }
 
-                // edw functionality gia new product dd('ok');
+             
 
 
-        Product::create([
+        $product=Product::create([
         'category_id' =>$request->category_id,
         'name' => $request->name,
         'image' => $image_name,
@@ -76,6 +81,8 @@ class ProductController extends Controller
         'uses' => $request->uses,
         'warranty' => $request->warranty,
     ]);
+    
+        $this->update_attributes($product);
 
         $request->session()->flash('message','Product added');
         
@@ -87,6 +94,7 @@ class ProductController extends Controller
 
     public function delete(Product $product_id)
     {
+
         Product::destroy($product_id->id);
         request()->session()->flash('message','Product deleted');
         return back();
@@ -164,7 +172,7 @@ class ProductController extends Controller
     }
 
     public function removeAttr(ProductAttributes $productattribute_id){
-        //dd( $productattribute_id->id);
+        
         ProductAttributes::destroy($productattribute_id->id);
         request()->session()->flash('message','Attribute deleted');
        return redirect()->to(url()->previous()."#repeat");
@@ -173,73 +181,76 @@ class ProductController extends Controller
 
     public function update_attributes(Product $product){
                 /**---------------start attributes section update------------------*/
-    foreach(Request('sku') as $key=>$val){
+        $data_attr_exist =request()->has([
+            'sku' ,
+            'image_attr', 
+            'mrp', 
+            'price',
+            'qty',
+            'sizes_id', 
+            'colors_id',
+        ]);
 
-        $data_attr=[
-            'sku' => Request('sku')[$key],
-            //'image_attr'=>Request('image_attr')[$key],
-            'image_attr'=>'',
-            'mrp' => Request('mrp')[$key],
-            'price' =>Request('price')[$key],
-            'qty' =>Request('qty')[$key],
-            'sizes_id' =>Request('sizes_id')[$key],
-            'colors_id' => Request('colors_id')[$key], 
-        ];
-           
-         /* if user input new file image attribute store new image else store the old value.
-            Key additionaly saved at file names to seperate files, beacause they are named based on time*/
-           
-            if(isset(request()->file('image_attr')[$key])){
-                $image_attr=request()->file('image_attr')[$key];
-                $ext=$image_attr->extension();
-                $image_attr_name=time().$key.'.'.$ext;
-                $image_attr->storeAs('public/product_photo',$image_attr_name);
-                $data_attr['image_attr']=$image_attr_name;
-                
-            }else{
-                $data_attr['image_attr']=$product->attribute()->get()[$key]->image_attr;
-               
-            }
-           
-      
-        $validator = Validator::make($data_attr, [
+        $data_attr =request()->validate([
             'sku' => 'required|max:8',
-            'image_attr' =>'mimes:jpg,bmp,png,jpeg',
+            'image_attr.*' =>'mimes:jpg,bmp,png,jpeg',
             'mrp' =>  'required',
             'price' => 'required',
             'qty' => 'required',
             'sizes_id' => 'required',
             'colors_id' => 'required',
         ]);
-        
-      
-  
-   
             
-            
-        /**save attribute errors into a session */
-        request()->session()->flash('validator',$validator->errors()->first());
+        if($data_attr_exist ){
+            foreach(Request('sku') as $key=>$val){
 
-        if($validator->valid()){ 
-            if($key >= ProductAttributes::where('products_id',$product->id)->count()){   
-                    ProductAttributes::create([
-                        'products_id'=>$product->id,
-                        'sku' => Request('sku')[$key],
-                        'image_attr'=>$data_attr['image_attr'],
-                        'mrp' => Request('mrp')[$key],
-                        'price' =>Request('price')[$key],
-                        'qty' =>Request('qty')[$key],
-                        'sizes_id' =>Request('sizes_id')[$key],
-                        'colors_id' => Request('colors_id')[$key],
-                    ]);
+        
+            
+            /* if user input new file image attribute store new image else store the old value.
+                Key additionaly saved at file names to seperate files, beacause they are named based on time*/
+            
+                if(isset(request()->file('image_attr')[$key])){
+                    $image_attr=request()->file('image_attr')[$key];
+                    $ext=$image_attr->extension();
+                    $image_attr_name=time().$key.'.'.$ext;
+                    $image_attr->storeAs('public/product_photo',$image_attr_name);
+                    $data_attr['image_attr'][$key]=$image_attr_name;
+                    
+                }else{
+                    $data_attr['image_attr'][$key]=$product->attribute()->get()[$key]->image_attr;
                 
+                }
+            
+
+
+                if($key >= ProductAttributes::where('products_id',$product->id)->count()){   
+                        ProductAttributes::create([
+                            'products_id'=>$product->id,
+                            'sku' => $data_attr['sku'][$key],
+                            'image_attr'=>$data_attr['image_attr'][$key],
+                            'mrp' =>$data_attr['mrp'][$key],
+                            'price' =>$data_attr['price'][$key],
+                            'qty' =>$data_attr['qty'][$key],
+                            'sizes_id' =>$data_attr['sizes_id'][$key],
+                            'colors_id' => $data_attr['colors_id'][$key],
+                        ]);
+                    
+                }else{
+                        
+                        ProductAttributes::where('products_id',$product->id)->get()[$key]->update([
+                            'products_id'=>$product->id,
+                            'sku' => $data_attr['sku'][$key],
+                            'image_attr'=>$data_attr['image_attr'][$key],
+                            'mrp' =>$data_attr['mrp'][$key],
+                            'price' =>$data_attr['price'][$key],
+                            'qty' =>$data_attr['qty'][$key],
+                            'sizes_id' =>$data_attr['sizes_id'][$key],
+                            'colors_id' => $data_attr['colors_id'][$key],
+                        ]);
+                } 
+            
             }
-            else{
-                    ProductAttributes::where('products_id',$product->id)->get()[$key]->update($validator->valid());
-            } 
-        } 
-    }
-  
+        }
 
         /**---------------end attributes section ------------------*/
     }

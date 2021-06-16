@@ -4,15 +4,6 @@
 @section('content')
 
     <h1>Product</h1>
-    @if(session('validator')!=null)
-    <div class="sufee-alert alert with-close alert-danger alert-dismissible fade show">
-        <span class="badge badge-pill badge-danger">Error at passing attribute data.</span>
-        {{session('validator')}}
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-            <span aria-hidden="true">×</span>
-        </button>
-	</div>
-    @endif
     <a href="product/create">
     <button type="button" class="btn btn-success" style="margin-bottom:10px;margin-top:10px;">Add Product</button>
     </a>

@@ -6,7 +6,11 @@
     <a href="{{url('admin/product')}}">
     <button type="button" class="btn btn-success" style="margin-bottom:10px;margin-top:10px;">Back</button>
     </a>
-
+    @if(session('message'))
+            <div class="alert alert-danger" role="alert">
+        {{session('message')}}  
+            </div>
+    @endif
     <div class="row m-t-30">
         <div class="col-md-12">
             <div class="table-responsive table--no-card m-b-30">

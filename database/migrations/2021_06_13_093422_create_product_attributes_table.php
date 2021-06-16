@@ -15,14 +15,14 @@ class CreateProductAttributesTable extends Migration
     {
         Schema::create('product_attributes', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('products_id')->constrained();
+            $table->foreignId('products_id')->constrained()->onDelete('cascade');
             $table->string('sku')->nullable();
             $table->string('image_attr')->nullable();
             $table->integer('mrp')->nullable();
             $table->integer('price')->nullable();
             $table->integer('qty')->nullable();
-            $table->foreignId('sizes_id')->constrained();
-            $table->foreignId('colors_id')->constrained();
+            $table->foreignId('sizes_id')->constrained()->onDelete('cascade');
+            $table->foreignId('colors_id')->constrained()->onDelete('cascade');
             $table->timestamps();
        
         });
