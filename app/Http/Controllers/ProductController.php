@@ -181,49 +181,52 @@ class ProductController extends Controller
 
     public function update_attributes(Product $product){
                 /**---------------start attributes section update------------------*/
-        $data_attr_exist =request()->has([
-            'sku' ,
-            'image_attr', 
-            'mrp', 
-            'price',
-            'qty',
-            'sizes_id', 
-            'colors_id',
-        ]);
-
-        $data_attr =request()->validate([
-            'sku' => 'required|max:8',
-            'image_attr.*' =>'mimes:jpg,bmp,png,jpeg',
-            'mrp' =>  'required',
-            'price' => 'required',
-            'qty' => 'required',
-            'sizes_id' => 'required',
-            'colors_id' => 'required',
-        ]);
-            
-        if($data_attr_exist ){
+                $data_attr_exist =request()->hasAny([
+                    'sku' ,
+                    'image_attr', 
+                    'mrp', 
+                    'price',
+                    'qty',
+                    'sizes_id', 
+                    'colors_id',
+                ]);
+            $data_attr =request()->validate([
+                'sku' => 'required|max:8',
+                'image_attr.*' =>'mimes:jpg,bmp,png,jpeg',
+                'mrp' =>  'required',
+                'price' => 'required',
+                'qty' => 'required',
+                'sizes_id' => 'required',
+                'colors_id' => 'required',
+            ]);
+        
+            if($data_attr_exist ){
+               
             foreach(Request('sku') as $key=>$val){
 
-        
-            
+       $isNewAttribute=$key >= $product->attribute()->count();
+           
             /* if user input new file image attribute store new image else store the old value.
                 Key additionaly saved at file names to seperate files, beacause they are named based on time*/
-            
+
+            try{
                 if(isset(request()->file('image_attr')[$key])){
                     $image_attr=request()->file('image_attr')[$key];
                     $ext=$image_attr->extension();
                     $image_attr_name=time().$key.'.'.$ext;
                     $image_attr->storeAs('public/product_photo',$image_attr_name);
                     $data_attr['image_attr'][$key]=$image_attr_name;
-                    
+
                 }else{
                     $data_attr['image_attr'][$key]=$product->attribute()->get()[$key]->image_attr;
                 
-                }
+                }  
+            }catch(\ErrorException $e){
+                $data_attr['image_attr'][$key]='';
+            }
             
 
-
-                if($key >= ProductAttributes::where('products_id',$product->id)->count()){   
+                if($isNewAttribute){  
                         ProductAttributes::create([
                             'products_id'=>$product->id,
                             'sku' => $data_attr['sku'][$key],
@@ -234,10 +237,10 @@ class ProductController extends Controller
                             'sizes_id' =>$data_attr['sizes_id'][$key],
                             'colors_id' => $data_attr['colors_id'][$key],
                         ]);
-                    
+                      
                 }else{
-                        
-                        ProductAttributes::where('products_id',$product->id)->get()[$key]->update([
+                   
+                         ProductAttributes::where('id',$product->attribute()->get()[$key]->id)->update([
                             'products_id'=>$product->id,
                             'sku' => $data_attr['sku'][$key],
                             'image_attr'=>$data_attr['image_attr'][$key],
@@ -247,10 +250,11 @@ class ProductController extends Controller
                             'sizes_id' =>$data_attr['sizes_id'][$key],
                             'colors_id' => $data_attr['colors_id'][$key],
                         ]);
+                        
                 } 
-            
+              
             }
-        }
+          }
 
         /**---------------end attributes section ------------------*/
     }
