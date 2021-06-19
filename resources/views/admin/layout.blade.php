@@ -33,10 +33,12 @@
     <!-- Main CSS-->
     <link href="{{asset('admin_assets/css/theme.css')}}" rel="stylesheet" media="all">
 
-   
+    <!-- admin multiple images dynamic form custom js-->   
+    <script src="{{asset('admin_assets/js/images_dynamic_form.js')}}"> </script>
 
     <!-- admin attribute dynamic form custom js-->   
     <script src="{{asset('admin_assets/js/attribute_dynamic_form.js')}}"> </script>
+    
     
 
     

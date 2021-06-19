@@ -6,6 +6,7 @@ use App\Models\Category;
 use App\Models\Color;
 use App\Models\Size;
 use App\Models\ProductAttributes;
+use App\Models\ProductImages;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\DB;
@@ -27,13 +28,14 @@ class ProductController extends Controller
         $colors= Color::where(['status'=>1])->get();
         $sizes= Size::where(['status'=>1])->get();
         $productattributes=[];
+        $productimages=[];
        
         /* validate that there is at least 1 active category at crating new product*/
         if($categories->isEmpty() ){
             request()->session()->flash('message','Error.Please activate and attach a Category');
         }
      
-        return view('admin.product.create',compact('categories','productattributes','colors','sizes'));
+        return view('admin.product.create',compact('categories','productattributes','colors','sizes','productimages'));
     }
 
     public function store(Request $request)
@@ -81,7 +83,7 @@ class ProductController extends Controller
         'uses' => $request->uses,
         'warranty' => $request->warranty,
     ]);
-    
+        $this->mutiple_images($product);
         $this->update_attributes($product);
 
         $request->session()->flash('message','Product added');
@@ -108,10 +110,10 @@ class ProductController extends Controller
         $categories=Category::where(['status'=>1])->get();
         $colors= Color::where(['status'=>1])->get();
         $sizes= Size::where(['status'=>1])->get();
-        $productattributes=[];
         $productattributes=ProductAttributes::where(['products_id'=>$product_id->id])->get();
+        $productimages=ProductImages::where(['products_id'=>$product_id->id])->get();
   
-        return view('admin.product.show',compact('product','categories','colors','sizes','productattributes'));
+        return view('admin.product.show',compact('product','categories','colors','sizes','productattributes','productimages'));
     }
 
     public function update(Product $product)
@@ -146,7 +148,7 @@ class ProductController extends Controller
         $data['image']=$product->image;
     }
         
-   
+        $this->mutiple_images($product);
         $this->update_attributes($product);
         
 
@@ -255,7 +257,70 @@ class ProductController extends Controller
               
             }
           }
+            /**---------------end attributes section ------------------*/
+    }
 
-        /**---------------end attributes section ------------------*/
+    public function mutiple_images(Product $product){
+
+        $data_img_exist =request()->hasAny([
+            'product_images' ,
+           
+        ]);
+    $data_img =request()->validate([
+        'product_images.*' =>'mimes:jpg,bmp,png,jpeg',
+        
+    ]);
+
+    if($data_img_exist ){
+               
+        foreach(Request('product_images') as $key=>$val){
+
+        $isNewImage=$key >= $product->image()->count();
+       
+        /* if user input new file image attribute store new image else store the old value.
+            Key additionaly saved at file names to seperate files, beacause they are named based on time*/
+
+        try{
+            if(isset(request()->file('product_images')[$key])){
+                $product_images=request()->file('product_images')[$key];
+                $ext=$product_images->extension();
+                $product_images_name=time().$key.'.'.$ext;
+                $product_images->storeAs('public/product_photo',$product_images_name);
+                $data_img['product_images'][$key]=$product_images_name;
+
+            }else{
+                $data_img['product_images'][$key]=$product->image()->get()[$key]->images;
+            
+            }  
+        }catch(\ErrorException $e){
+            $data_img['product_images'][$key]='';
+        }
+        
+
+            if($isNewImage){  
+                    ProductImages::create([
+                        'products_id'=>$product->id,
+                        'images'=>$data_img['product_images'][$key],
+                    ]);
+                  
+            }else{
+               
+                     ProductImages::where('id',$product->image()->get()[$key]->id)->update([
+                        'products_id'=>$product->id,
+                        'images'=>$data_img['product_images'][$key],
+                    ]);
+                    
+            } 
+          
+        }
+      }
+}
+
+    public function removeMutipleImages(ProductImages $productimage_id){
+        
+        ProductImages::destroy($productimage_id->id);
+        request()->session()->flash('message_image','Image deleted');
+       return redirect()->to(url()->previous()."#repeat_image");
+       
     }
 }

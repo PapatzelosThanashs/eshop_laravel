@@ -9,6 +9,7 @@
                         <div class="card">
                             <div class="card-body" id="repeat">
                                 @forelse($productattributes as $productattribute)
+                                <hr>
                                     <div id="prod_att_0" class="row form-group">
                                         <div class="col-2 mt-3">
                                         <label for="sku" class="control-label mb-1">SKU</label>
@@ -73,42 +74,44 @@
                                     </div>
                                 @empty
                                     <div id="prod_att_0" class="row form-group">
-                                            <div class="col-2 mt-3">
+                                            <div class="col-3 mt-3">
                                             <label for="sku" class="control-label mb-1">SKU</label>
                                                 <input name="sku[]" type="text" placeholder="" class="form-control" value="">
                                             </div>
-                                            <div class="col-2 mt-3">
+                                            <div class="col-3 mt-3">
                                             <label for="mrp" class="control-label mb-1">MRP</label>
                                                 <input name="mrp[]" type="text" placeholder="" class="form-control" value="">
                                             </div>
-                                            <div class="col-2 mt-3">
+                                            <div class="col-3 mt-3">
                                             <label for="price" class="control-label mb-1">Price</label>
                                                 <input name="price[]" type="text" placeholder="" class="form-control" value="">
                                             </div>
 
-                                            <div class="col-2 mt-3">
+                                            <div class="col-3 mt-3">
                                             <label for="sizes_id" class="control-label mb-1">Size</label>
                                             <select id="sizes_id" name="sizes_id[]" class="form-control" value="">
+                                                    <option value="" disabled selected>Select Size</option>
                                             @foreach($sizes as $size)                                 
                                                     <option value="{{$size->id}}">{{$size->size}}</option>
                                             @endforeach
                                             </select>
                                             </div>
-                                            <div class="col-2 mt-3">
+                                            <div class="col-3 mt-3">
                                             <label for="colors_id" class="control-label mb-1">Color</label>
                                             <select id="colors_id" name="colors_id[]" class="form-control" value="">
+                                                    <option value="" disabled selected>Select Color</option>
                                             @foreach($colors as $color)                                   
                                                     <option value="{{$color->id}}">{{$color->color}}</option>
                                             @endforeach
                                             </select>
                                             </div>
                                             
-                                            <div class="col-2 mt-3">
+                                            <div class="col-3 mt-3">
                                             <label for="qty" class="control-label mb-1">Qty</label>
                                                 <input name="qty[]" type="text" placeholder="" class="form-control" value="">
                                             </div>
 
-                                            <div class="col-4 mt-3">
+                                            <div class="col-3 mt-3">
                                             <label for="image_attr" class="control-label mb-1">Image_attr</label>
                                             <input  id="image_attr[]" name="image_attr[]" type="file" class="form-control" aria-required="true" aria-invalid="false" multiple >
                                             @error('image_attr')

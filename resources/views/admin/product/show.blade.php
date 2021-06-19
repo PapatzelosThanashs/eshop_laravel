@@ -47,39 +47,43 @@
 								</div>
                                 @enderror
                             </div>
-                            <!--Category -->
                             <div class="form-group">
-                            <label for="category_id">Choose a Category:</label>
-                                <select id="category_id" name="category_id">
-                                @foreach($categories as $category)
-                                    @if($product->category_id==$category->id)
-                                        <option selected value="{{$category->id}}">{{$category->category_name}}</option>
-                                    @else
-                                        <option value="{{$category->id}}">{{$category->category_name}}</option>
-                                    @endif
-                                @endforeach
-                                </select>
-                            </div>
-                            <!--Brand -->
-                            <div class="form-group">
-                            <label for="brand" class="control-label mb-1">Brand</label>
-                                <input id="brand" name="brand" type="text" class="form-control" aria-required="true" aria-invalid="false" required value="{{$product->brand ?? ''}}">
-                                @error('brand')
-                                <div class="alert alert-danger" role="alert">
-                                    {{$message}}
-								</div>
-                                @enderror
-                            </div>
-                            <!--Model -->
-                            <div class="form-group">
-                            <label for="model" class="control-label mb-1">Model</label>
-                                <input id="model" name="model" type="text" class="form-control" aria-required="true" aria-invalid="false" required value="{{$product->model ?? ''}}">
-                                @error('model')
-                                <div class="alert alert-danger" role="alert">
-                                    {{$message}}
-								</div>
-                                @enderror
-                            </div>
+                                <div class="row m-t-30" >
+                                        <!--Category -->
+                                        <div class="col-md-4">  
+                                        <label for="category_id">Choose a Category:</label>
+                                            <select id="category_id" name="category_id"  class="form-control">
+                                            @foreach($categories as $category)
+                                                @if($product->category_id==$category->id)
+                                                    <option selected value="{{$category->id}}">{{$category->category_name}}</option>
+                                                @else
+                                                    <option value="{{$category->id}}">{{$category->category_name}}</option>
+                                                @endif
+                                            @endforeach
+                                            </select>
+                                        </div>
+                                        <!--Brand -->
+                                        <div class="col-md-4">  
+                                        <label for="brand" class="control-label mb-1">Brand</label>
+                                            <input id="brand" name="brand" type="text" class="form-control" aria-required="true" aria-invalid="false" required value="{{$product->brand ?? ''}}">
+                                            @error('brand')
+                                            <div class="alert alert-danger" role="alert">
+                                                {{$message}}
+                                            </div>
+                                            @enderror
+                                        </div>
+                                        <!--Model -->
+                                        <div class="col-md-4">  
+                                        <label for="model" class="control-label mb-1">Model</label>
+                                            <input id="model" name="model" type="text" class="form-control" aria-required="true" aria-invalid="false" required value="{{$product->model ?? ''}}">
+                                            @error('model')
+                                            <div class="alert alert-danger" role="alert">
+                                                {{$message}}
+                                            </div>
+                                            @enderror
+                                        </div>
+                                </div>                  
+                            </div>        
                             <!--Short desc -->
                             <div class="form-group">
                             <label for="short_desc" class="control-label mb-1">Short desc</label>
@@ -144,13 +148,18 @@
                     </div>
                 </div>
             </div>  
-        </div>  
-          @if(session('message'))
-            <div class="alert alert-success" role="alert">
-        {{session('message')}}  
-            </div>
-        @endif
-
+        </div> 
+            @if(session('message_image'))
+                <div class="alert alert-success" role="alert">
+            {{session('message_image')}}  
+                </div>
+            @endif 
+        @include('admin.product.images') 
+            @if(session('message'))
+                <div class="alert alert-success" role="alert">
+            {{session('message')}}  
+                </div>
+            @endif
         @include('admin.product.attributes')
                                    
         <div>

@@ -75,6 +75,7 @@ Route::middleware(['AdminAuth'])->group(function () {
      Route::patch('/admin/product/{product}',[ProductController::class,'update']);
      Route::get('/admin/product/{product_id}/{status}',[ProductController::class,'status']);
      Route::get('/admin/del_attr/{productattribute_id}',[ProductController::class,'removeAttr']);
+     Route::get('/admin/del_image/{productimage_id}',[ProductController::class,'removeMutipleImages']);
     
     
 });
