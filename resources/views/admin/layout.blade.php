@@ -68,7 +68,7 @@
             <nav class="navbar-mobile">
                 <div class="container-fluid">
                     <ul class="navbar-mobile__list list-unstyled">
-                        <li class="@yield('active_dashboard')">
+                    <li class="@yield('active_dashboard')">
                             <a href="{{route('dashboard.index')}}">
                                 <i class="fas fa-chart-bar"></i>Dashboard</a>
                         </li>
@@ -83,6 +83,18 @@
                         <li class="@yield('active_size')">
                             <a href="{{route('size.index')}}">
                             <i class="fas fa-weight"></i>Size</a>
+                        </li>
+                        <li class="@yield('active_color')">
+                            <a href="{{route('color.index')}}">
+                            <i class="fas fa-paint-brush"></i>Color</a>
+                        </li>
+                        <li class="@yield('active_brand')">
+                            <a href="{{route('brand.index')}}">
+                            <i class="fas fa-bold"></i>Brand</a>
+                        </li>
+                        <li class="@yield('active_product')">
+                            <a href="{{route('product.index')}}">
+                            <i class="fas fa-archive"></i>Product</a>
                         </li>
                     </ul>
                 </div>
@@ -119,6 +131,10 @@
                         <li class="@yield('active_color')">
                             <a href="{{route('color.index')}}">
                             <i class="fas fa-paint-brush"></i>Color</a>
+                        </li>
+                        <li class="@yield('active_brand')">
+                            <a href="{{route('brand.index')}}">
+                            <i class="fas fa-bold"></i>Brand</a>
                         </li>
                         <li class="@yield('active_product')">
                             <a href="{{route('product.index')}}">

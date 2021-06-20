@@ -6,6 +6,7 @@ use App\Http\Controllers\CouponController;
 use App\Http\Controllers\SizeController;
 use App\Http\Controllers\ColorController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\BrandController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -77,5 +78,13 @@ Route::middleware(['AdminAuth'])->group(function () {
      Route::get('/admin/del_attr/{productattribute_id}',[ProductController::class,'removeAttr']);
      Route::get('/admin/del_image/{productimage_id}',[ProductController::class,'removeMutipleImages']);
     
+        /* crud admin brand routes */
+        Route::get('/admin/brand',[BrandController::class,'index'])->name('brand.index');
+        Route::get('/admin/brand/create',[BrandController::class,'create']);
+        Route::post('/admin/brand',[BrandController::class,'store']);
+        Route::delete('/admin/brand/{brand_id}',[BrandController::class,'delete']);
+        Route::get('/admin/brand/{brand_id}',[BrandController::class,'show']);
+        Route::patch('/admin/brand/{brand}',[BrandController::class,'update']);
+        Route::get('/admin/brand/{brand_id}/{status}',[BrandController::class,'status']);
     
 });
