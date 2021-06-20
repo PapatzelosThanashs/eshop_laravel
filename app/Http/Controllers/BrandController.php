@@ -65,7 +65,7 @@ class BrandController extends Controller
        
         $data=request()->validate([
             'name' => 'required',
-            'image' => 'required|mimes:jpg,bmp,png,jpeg',
+            'image' => 'mimes:jpg,bmp,png,jpeg',
     ]);
 
         if(request()->hasfile('image')){
@@ -76,7 +76,7 @@ class BrandController extends Controller
             $data['image']=$image_name;
         
         }else{
-            $data['image']=$product->image;
+            $data['image']=$brand->image;
         }
 
         $brand->update($data);
