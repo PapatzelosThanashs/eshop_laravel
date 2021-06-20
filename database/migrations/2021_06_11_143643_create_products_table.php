@@ -15,11 +15,11 @@ class CreateProductsTable extends Migration
     {
         Schema::create('products', function (Blueprint $table) {
             $table->id();
-            $table->integer('category_id');
+            $table->foreignId('category_id')->constrained()->onDelete('cascade');
             $table->string('name');
             $table->string('image');
             $table->string('slug');
-            $table->string('brand');
+            $table->foreignId('brand_id')->constrained()->onDelete('cascade');
             $table->string('model');
             $table->longText('short_desc');
             $table->longText('desc');

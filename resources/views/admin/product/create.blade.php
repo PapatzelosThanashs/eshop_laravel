@@ -64,13 +64,13 @@
                                         </div>          
                                             <!--Brand -->
                                         <div class="col-md-4">           
-                                            <label for="brand" class="control-label mb-1">Brand</label>
-                                                <input id="brand" name="brand" type="text" class="form-control" aria-required="true" aria-invalid="false" required >
-                                                @error('brand')
-                                                <div class="alert alert-danger" role="alert">
-                                                    {{$message}}
-                                                </div>
-                                                @enderror
+                                            <label for="brand_id" class="control-label mb-1">Brand</label>
+                                                <select id="brand_id" name="brand_id" class="form-control">
+                                                <option value="" disabled selected>Select Brand</option>
+                                                @foreach($brands as $brand)
+                                                    <option value="{{$brand->id}}">{{$brand->name}}</option>
+                                                @endforeach
+                                                </select>
                                         </div>            
                                             <!--Model -->
                                         <div class="col-md-4">      

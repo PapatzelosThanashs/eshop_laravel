@@ -5,6 +5,7 @@ use App\Models\Product;
 use App\Models\Category;
 use App\Models\Color;
 use App\Models\Size;
+use App\Models\Brand;
 use App\Models\ProductAttributes;
 use App\Models\ProductImages;
 use Illuminate\Http\Request;
@@ -27,6 +28,7 @@ class ProductController extends Controller
         $categories=Category::where(['status'=>1])->get();
         $colors= Color::where(['status'=>1])->get();
         $sizes= Size::where(['status'=>1])->get();
+        $brands= Brand::where(['status'=>1])->get();
         $productattributes=[];
         $productimages=[];
        
@@ -35,7 +37,7 @@ class ProductController extends Controller
             request()->session()->flash('message','Error.Please activate and attach a Category');
         }
      
-        return view('admin.product.create',compact('categories','productattributes','colors','sizes','productimages'));
+        return view('admin.product.create',compact('categories','productattributes','colors','sizes','productimages','brands'));
     }
 
     public function store(Request $request)
@@ -46,7 +48,7 @@ class ProductController extends Controller
         'name' =>  'required|unique:products',
         'image'=>'required|mimes:jpg,bmp,png,jpeg',
         'slug' => 'required|unique:products,slug',
-        'brand' =>'required',
+        'brand_id' =>'required',
         'model' => 'required',
         'short_desc' => 'required',
         'desc' => 'required',
@@ -74,7 +76,7 @@ class ProductController extends Controller
         'name' => $request->name,
         'image' => $image_name,
         'slug' => $request->slug,
-        'brand' => $request->brand,
+        'brand_id' => $request->brand_id,
         'model' => $request->model,
         'short_desc' => $request->short_desc,
         'desc' => $request->desc,
@@ -104,16 +106,16 @@ class ProductController extends Controller
 
     public function show(Product $product_id)
     {
-      
-        $product=Product::where(['id'=>$product_id->id])->first();
+        //$product=Product::where(['id'=>$product_id->id])->first();
        
         $categories=Category::where(['status'=>1])->get();
         $colors= Color::where(['status'=>1])->get();
         $sizes= Size::where(['status'=>1])->get();
+        $brands= Brand::where(['status'=>1])->get();
         $productattributes=ProductAttributes::where(['products_id'=>$product_id->id])->get();
         $productimages=ProductImages::where(['products_id'=>$product_id->id])->get();
   
-        return view('admin.product.show',compact('product','categories','colors','sizes','productattributes','productimages'));
+        return view('admin.product.show',compact('product_id','categories','colors','sizes','productattributes','productimages','brands'));
     }
 
     public function update(Product $product)
@@ -124,7 +126,7 @@ class ProductController extends Controller
             'name' => 'required',
             'image'=>'mimes:jpg,bmp,png,jpeg',
             'slug' => 'required',
-            'brand' =>'required',
+            'brand_id' =>'required',
             'model' => 'required',
             'short_desc' => 'required',
             'desc' => 'required',

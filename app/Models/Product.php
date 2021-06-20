@@ -13,7 +13,7 @@ class Product extends Model
         'name',
         'image',
         'slug',
-        'brand',
+        'brand_id',
         'model',
         'short_desc',
         'desc',
@@ -35,5 +35,14 @@ class Product extends Model
         return $this->HasMany(ProductImages::class,'products_id');
     }
     
+    public function brand()
+    {
+        return $this->belongsTo(Brand::class);
+    }
+
+    public function category()
+    {
+        return $this->belongsTo(Category::class);
+    }
 
 }
