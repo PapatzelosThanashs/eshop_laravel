@@ -12,6 +12,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\File; 
 
 
 class ProductController extends Controller
@@ -64,7 +65,7 @@ class ProductController extends Controller
             $image=$request->file('image');
             $ext=$image->extension();
             $image_name=time().'.'.$ext;
-            $image->storeAs('public/product_photo',$image_name);
+            $image->storeAs('public/product_photo/product_images',$image_name);
            
         }
 
@@ -140,10 +141,17 @@ class ProductController extends Controller
 
     /** if user input new file store new image else store the old */
     if(request()->hasfile('image')){
+        $OldImage=$product->image;
+       
+        if(File::exists(public_path('storage/product_photo/product_images/'.$OldImage))){
+             File::delete(public_path('storage/product_photo/product_images/'.$OldImage));
+            
+        }
+
         $image=request()->file('image');
         $ext=$image->extension();
         $image_name=time().'.'.$ext;
-        $image->storeAs('public/product_photo',$image_name);
+        $image->storeAs('public/product_photo/product_images',$image_name);
         $data['image']=$image_name;
        
     }else{
@@ -178,6 +186,7 @@ class ProductController extends Controller
     public function removeAttr(ProductAttributes $productattribute_id){
         
         ProductAttributes::destroy($productattribute_id->id);
+        File::delete(public_path('storage/product_photo/attribute_images/'.$productattribute_id->image_attr));
         request()->session()->flash('message','Attribute deleted');
        return redirect()->to(url()->previous()."#repeat");
        
@@ -208,17 +217,34 @@ class ProductController extends Controller
                
             foreach(Request('sku') as $key=>$val){
 
-       $isNewAttribute=$key >= $product->attribute()->count();
+                $isNewAttribute=$key >= $product->attribute()->count();
            
             /* if user input new file image attribute store new image else store the old value.
                 Key additionaly saved at file names to seperate files, beacause they are named based on time*/
+           
+                
 
             try{
                 if(isset(request()->file('image_attr')[$key])){
+
+                   /* check if exists on db then delete it from folder */
+                   if(isset($product->attribute()->get()[$key]->image_attr)){
+                    $OldAttrImage=$product->attribute()->get()[$key]->image_attr;
+                   }else{
+                    $OldAttrImage="";
+                   }
+
+                    if(File::exists(public_path('storage/product_photo/attribute_images/'.$OldAttrImage)) ){
+                        File::delete(public_path('storage/product_photo/attribute_images/'.$OldAttrImage));
+                        
+                    }
+                    /* end check */
+
+
                     $image_attr=request()->file('image_attr')[$key];
                     $ext=$image_attr->extension();
                     $image_attr_name=time().$key.'.'.$ext;
-                    $image_attr->storeAs('public/product_photo',$image_attr_name);
+                    $image_attr->storeAs('public/product_photo/attribute_images',$image_attr_name);
                     $data_attr['image_attr'][$key]=$image_attr_name;
 
                 }else{
@@ -227,6 +253,7 @@ class ProductController extends Controller
                 }  
             }catch(\ErrorException $e){
                 $data_attr['image_attr'][$key]='';
+                
             }
             
 
@@ -253,12 +280,13 @@ class ProductController extends Controller
                             'qty' =>$data_attr['qty'][$key],
                             'sizes_id' =>$data_attr['sizes_id'][$key],
                             'colors_id' => $data_attr['colors_id'][$key],
-                        ]);
-                        
+                        ]);   
                 } 
-              
             }
+            
+    
           }
+      
             /**---------------end attributes section ------------------*/
     }
 
@@ -284,10 +312,24 @@ class ProductController extends Controller
 
         try{
             if(isset(request()->file('product_images')[$key])){
+
+                /* check if exists on db then delete it from folder */
+                if(isset($product->image()->get()[$key]->images)){
+                $OldMultiImage=$product->image()->get()[$key]->images;
+                }else{
+                $OldMultiImage="";
+                }
+                
+                if(File::exists(public_path('storage/product_photo/multiple_images/'.$OldMultiImage)) ){
+                    File::delete(public_path('storage/product_photo/multiple_images/'.$OldMultiImage));
+                    
+                } 
+                /* end check */
+
                 $product_images=request()->file('product_images')[$key];
                 $ext=$product_images->extension();
                 $product_images_name=time().$key.'.'.$ext;
-                $product_images->storeAs('public/product_photo',$product_images_name);
+                $product_images->storeAs('public/product_photo/multiple_images',$product_images_name);
                 $data_img['product_images'][$key]=$product_images_name;
 
             }else{
@@ -321,6 +363,7 @@ class ProductController extends Controller
     public function removeMutipleImages(ProductImages $productimage_id){
         
         ProductImages::destroy($productimage_id->id);
+        File::delete(public_path('storage/product_photo/multiple_images/'.$productimage_id->images));
         request()->session()->flash('message_image','Image deleted');
        return redirect()->to(url()->previous()."#repeat_image");
        

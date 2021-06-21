@@ -56,7 +56,7 @@
 
                                         <div class="col-4 mt-3">
                                             <label for="image_attr" class="control-label mb-1">Image_attr :</label>
-                                            <img style="width:50px;height:50px" src="{{ asset('storage/product_photo/'.$productattribute->image_attr) }}" alt="Image Unavailable"> 
+                                            <img style="width:50px;height:50px" src="{{ asset('storage/product_photo/attribute_images/'.$productattribute->image_attr) }}" alt="Image Unavailable"> 
                                             <input  id="image_attr[]" name="image_attr[]" type="file" class="form-control" aria-required="true" aria-invalid="false" multiple >
                                             @error('image_attr')
                                             <div class="alert alert-danger" role="alert">

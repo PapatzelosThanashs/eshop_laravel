@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 use App\Models\Brand;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\File; 
+
 
 class BrandController extends Controller
 {
@@ -30,7 +32,7 @@ class BrandController extends Controller
             $image=$request->file('image');
             $ext=$image->extension();
             $image_name=time().'.'.$ext;
-            $image->storeAs('public/product_photo',$image_name);
+            $image->storeAs('public/brands',$image_name);
         }
 
         Brand::create([
@@ -69,10 +71,16 @@ class BrandController extends Controller
     ]);
 
         if(request()->hasfile('image')){
+            $OldBrandImage=$brand->image;
+       
+            if(File::exists(public_path('storage/brands/'.$OldBrandImage))){
+                 File::delete(public_path('storage/brands/'.$OldBrandImage));
+                
+            }
             $image=request()->file('image');
             $ext=$image->extension();
             $image_name=time().'.'.$ext;
-            $image->storeAs('public/product_photo',$image_name);
+            $image->storeAs('public/brands',$image_name);
             $data['image']=$image_name;
         
         }else{

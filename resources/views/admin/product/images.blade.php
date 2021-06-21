@@ -8,7 +8,7 @@
                      @forelse($productimages as $productimage)
                         <div class="form-group" id="prod_image_0">
                                 <label for="product_images" class="control-label mb-1">Image</label>
-                                    <img style="width:50px;height:50px" src="{{ asset('storage/product_photo/'.$productimage->images) }}" alt="Italian Trulli">
+                                    <img style="width:50px;height:50px" src="{{ asset('storage/product_photo/multiple_images/'.$productimage->images) }}" alt="Italian Trulli">
                                     <input  id="product_images[]" name="product_images[]" type="file" class="form-control" aria-required="true" aria-invalid="false"   >
                                     @error('product_images')
                                     <div class="alert alert-danger" role="alert">

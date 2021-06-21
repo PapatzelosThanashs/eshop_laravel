@@ -31,7 +31,7 @@
                         <tr>
                             <td>{{$brand->id}}</td>
                             <td>{{$brand->name}}</td>
-                            <td><img style="width:50px;height:50px" src="{{ asset('storage/product_photo/'.$brand->image) }}" alt="Italian Trulli"></td>
+                            <td><img style="width:50px;height:50px" src="{{ asset('storage/brands/'.$brand->image) }}" alt="Italian Trulli"></td>
                             <td style="display: flex;">
                            
                             <form action="{{url('/admin/brand/')}}/{{$brand->id}}" method="post">

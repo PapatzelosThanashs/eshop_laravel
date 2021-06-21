@@ -39,7 +39,7 @@
                             <!--Image -->
                             <div class="form-group">
                             <label for="image" class="control-label mb-1">Change Image</label>
-                                <img style="width:50px;height:50px" src="{{ asset('storage/product_photo/'.$product_id->image) }}" alt="Italian Trulli">
+                                <img style="width:50px;height:50px" src="{{ asset('storage/product_photo/product_images/'.$product_id->image) }}" alt="Italian Trulli">
                                 <input  id="image" name="image" type="file" class="form-control" aria-required="true" aria-invalid="false"   >
                                 @error('image')
                                 <div class="alert alert-danger" role="alert">
