@@ -188,34 +188,33 @@ class ProductController extends Controller
         ProductAttributes::destroy($productattribute_id->id);
         File::delete(public_path('storage/product_photo/attribute_images/'.$productattribute_id->image_attr));
         request()->session()->flash('message','Attribute deleted');
-       return redirect()->to(url()->previous()."#repeat");
+        return redirect()->to(url()->previous()."#repeat");
        
     }
 
     public function update_attributes(Product $product){
                 /**---------------start attributes section update------------------*/
-                $data_attr_exist =request()->hasAny([
-                    'sku' ,
-                    'image_attr', 
-                    'mrp', 
-                    'price',
-                    'qty',
-                    'sizes_id', 
-                    'colors_id',
-                ]);
-            $data_attr =request()->validate([
-                'sku' => 'required|max:8',
-                'image_attr.*' =>'mimes:jpg,bmp,png,jpeg',
-                'mrp' =>  'required',
-                'price' => 'required',
-                'qty' => 'required',
-                'sizes_id' => 'required',
-                'colors_id' => 'required',
-            ]);
-        
-            if($data_attr_exist ){
-               
+
             foreach(Request('sku') as $key=>$val){
+      
+
+                $attr_exist=request()->filled('sku.'.$key) || request()->filled('mrp.'.$key) ||
+                            request()->filled('price.'.$key) || request()->filled('qty.'.$key) ||
+                            request()->filled('sizes_id.'.$key) || request()->filled('colors_id.'.$key) ||
+                            request()->hasFile('image_attr.'.$key);
+
+
+                if($attr_exist){
+
+                $data_attr =request()->validate([
+                    'sku' => 'max:8',
+                    'image_attr.*' =>'mimes:jpg,bmp,png,jpeg',
+                    'mrp' =>  '',
+                    'price' => '',
+                    'qty' => '',
+                    'sizes_id' => 'required',
+                    'colors_id' => 'required',
+                ]);
 
                 $isNewAttribute=$key >= $product->attribute()->count();
            
@@ -282,10 +281,11 @@ class ProductController extends Controller
                             'colors_id' => $data_attr['colors_id'][$key],
                         ]);   
                 } 
+              } 
             }
             
-    
-          }
+
+          
       
             /**---------------end attributes section ------------------*/
     }

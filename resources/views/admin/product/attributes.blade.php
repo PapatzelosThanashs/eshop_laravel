@@ -95,6 +95,11 @@
                                                     <option value="{{$size->id}}">{{$size->size}}</option>
                                             @endforeach
                                             </select>
+                                            @error('sizes_id')
+                                            <div class="alert alert-danger">
+											{{ $message }}
+										    </div>
+                                            @enderror
                                             </div>
                                             <div class="col-3 mt-3">
                                             <label for="colors_id" class="control-label mb-1">Color</label>
@@ -104,6 +109,11 @@
                                                     <option value="{{$color->id}}">{{$color->color}}</option>
                                             @endforeach
                                             </select>
+                                            @error('colors_id')
+                                            <div class="alert alert-danger">
+											{{ $message }}
+										    </div>
+                                            @enderror
                                             </div>
                                             
                                             <div class="col-3 mt-3">

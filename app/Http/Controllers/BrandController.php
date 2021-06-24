@@ -49,6 +49,7 @@ class BrandController extends Controller
     public function delete(Brand $brand_id)
     {
         Brand::destroy($brand_id->id);
+        File::delete(public_path('storage/brands/'.$brand_id->image));
         request()->session()->flash('message','Brand deleted');
         return back();
     }
