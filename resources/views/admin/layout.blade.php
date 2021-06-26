@@ -92,6 +92,10 @@
                             <a href="{{route('brand.index')}}">
                             <i class="fas fa-bold"></i>Brand</a>
                         </li>
+                        <li class="@yield('active_brand')">
+                            <a href="{{route('tax.index')}}">
+                            <i class="fab fa-tumblr-square"></i>Tax</a>
+                        </li>
                         <li class="@yield('active_product')">
                             <a href="{{route('product.index')}}">
                             <i class="fas fa-archive"></i>Product</a>
@@ -135,6 +139,10 @@
                         <li class="@yield('active_brand')">
                             <a href="{{route('brand.index')}}">
                             <i class="fas fa-bold"></i>Brand</a>
+                        </li>
+                        <li class="@yield('active_brand')">
+                            <a href="{{route('tax.index')}}">
+                            <i class="fab fa-tumblr-square"></i>Tax</a>
                         </li>
                         <li class="@yield('active_product')">
                             <a href="{{route('product.index')}}">

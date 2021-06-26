@@ -7,6 +7,7 @@ use App\Http\Controllers\SizeController;
 use App\Http\Controllers\ColorController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\BrandController;
+use App\Http\Controllers\TaxController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -78,13 +79,22 @@ Route::middleware(['AdminAuth'])->group(function () {
      Route::get('/admin/del_attr/{productattribute_id}',[ProductController::class,'removeAttr']);
      Route::get('/admin/del_image/{productimage_id}',[ProductController::class,'removeMutipleImages']);
     
-        /* crud admin brand routes */
-        Route::get('/admin/brand',[BrandController::class,'index'])->name('brand.index');
-        Route::get('/admin/brand/create',[BrandController::class,'create']);
-        Route::post('/admin/brand',[BrandController::class,'store']);
-        Route::delete('/admin/brand/{brand_id}',[BrandController::class,'delete']);
-        Route::get('/admin/brand/{brand_id}',[BrandController::class,'show']);
-        Route::patch('/admin/brand/{brand}',[BrandController::class,'update']);
-        Route::get('/admin/brand/{brand_id}/{status}',[BrandController::class,'status']);
+    /* crud admin brand routes */
+    Route::get('/admin/brand',[BrandController::class,'index'])->name('brand.index');
+    Route::get('/admin/brand/create',[BrandController::class,'create']);
+    Route::post('/admin/brand',[BrandController::class,'store']);
+    Route::delete('/admin/brand/{brand_id}',[BrandController::class,'delete']);
+    Route::get('/admin/brand/{brand_id}',[BrandController::class,'show']);
+    Route::patch('/admin/brand/{brand}',[BrandController::class,'update']);
+    Route::get('/admin/brand/{brand_id}/{status}',[BrandController::class,'status']);
+
+           /* crud admin tax routes */
+     Route::get('/admin/tax',[TaxController::class,'index'])->name('tax.index');
+     Route::get('/admin/tax/create',[TaxController::class,'create']);
+     Route::post('/admin/tax',[TaxController::class,'store']);
+     Route::delete('/admin/tax/{tax_id}',[TaxController::class,'delete']);
+     Route::get('/admin/tax/{tax_id}',[TaxController::class,'show']);
+     Route::patch('/admin/tax/{tax}',[TaxController::class,'update']);
+     Route::get('/admin/tax/{tax_id}/{status}',[TaxController::class,'status']);
     
 });
