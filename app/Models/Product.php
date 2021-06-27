@@ -22,6 +22,13 @@ class Product extends Model
         'uses',
         'warranty',
         'status',
+        'is_promo',
+        'is_discounted',
+        'is_featured',
+        'is_trending',
+        'lead_time',
+        'tax_id',
+  
 
     ];
 
@@ -44,5 +51,7 @@ class Product extends Model
     {
         return $this->belongsTo(Category::class);
     }
+
+ 
 
 }

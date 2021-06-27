@@ -92,7 +92,7 @@
                             <a href="{{route('brand.index')}}">
                             <i class="fas fa-bold"></i>Brand</a>
                         </li>
-                        <li class="@yield('active_brand')">
+                        <li class="@yield('active_tax')">
                             <a href="{{route('tax.index')}}">
                             <i class="fab fa-tumblr-square"></i>Tax</a>
                         </li>
@@ -140,7 +140,7 @@
                             <a href="{{route('brand.index')}}">
                             <i class="fas fa-bold"></i>Brand</a>
                         </li>
-                        <li class="@yield('active_brand')">
+                        <li class="@yield('active_tax')">
                             <a href="{{route('tax.index')}}">
                             <i class="fab fa-tumblr-square"></i>Tax</a>
                         </li>

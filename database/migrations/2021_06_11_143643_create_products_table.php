@@ -28,6 +28,12 @@ class CreateProductsTable extends Migration
             $table->longText('uses');
             $table->longText('warranty');
             $table->boolean('status')->default(false);
+            $table->string('lead_time')->default(null);
+            $table->foreignId('tax_id')->constrained()->onDelete('cascade');
+            $table->boolean('is_promo');
+            $table->boolean('is_featured');
+            $table->boolean('is_discounted');
+            $table->boolean('is_trending');
             $table->timestamps();
         });
     }

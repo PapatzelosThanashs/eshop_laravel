@@ -147,6 +147,99 @@
 								</div>
                                 @enderror
                             </div>
+
+                            <div class="form-group">
+                                    <div class="row m-t-30" >
+                                        <!--Lead time-->
+                                        <div class="col-md-8">      
+                                            <label for="lead_time" class="control-label mb-1">Lead Time</label>
+                                            <input id="lead_time" name="lead_time" type="text" class="form-control" aria-required="true" aria-invalid="false" required value="{{$product_id->lead_time?? ''}}">
+                                            @error('lead_time')
+                                            <div class="alert alert-danger" role="alert">
+                                                {{$message}}
+                                            </div>
+                                            @enderror
+                                        </div>            
+                                              
+                                            <!--Tax-->
+                                        <div class="col-md-4">           
+                                            <label for="tax_id" class="control-label mb-1">Tax</label>
+                                            <select id="tax_id" name="tax_id" class="form-control">
+                                            @foreach($taxes as $tax)
+                                                @if($tax->id==$product_id->tax_id)
+                                                <option selected value="{{$tax->id}}">{{$tax->tax_desc}}</option>
+                                                @else
+                                                <option value="{{$tax->id}}">{{$tax->tax_desc}}</option>
+                                                @endif
+                                            @endforeach
+                                            </select>
+                                        </div>            
+                                              
+                                    </div>                  
+                                </div>   
+
+                                <div class="form-group">
+                                    <div class="row m-t-30" >
+                                               
+                                            <!--is promo-->
+                                        <div class="col-md-3">           
+                                            <label for="is_promo" class="control-label mb-1">Is Promo</label>
+                                            <select id="is_promo" name="is_promo" class="form-control">
+                                            @if($product_id->is_promo=='1')
+                                                <option selected value="1">Yes</option>
+                                                <option value="0">No</option> 
+                                            @else    
+                                                <option value="1">Yes</option>
+                                                <option selected value="0">No</option>   
+                                            @endif                                           
+                                            </select>
+                                        </div>         
+                                              
+                                            <!--is featured-->
+                                            <div class="col-md-3">           
+                                            <label for="is_featured" class="control-label mb-1">Is Featured</label>
+                                            <select id="is_featured" name="is_featured" class="form-control">
+                                            @if($product_id->is_featured=='1')
+                                                <option selected value="1">Yes</option>
+                                                <option value="0">No</option> 
+                                            @else    
+                                                <option value="1">Yes</option>
+                                                <option selected value="0">No</option>   
+                                            @endif                                            
+                                            </select>
+                                        </div>                    
+
+                                             <!--is discounted-->
+                                        <div class="col-md-3">           
+                                            <label for="is_discounted" class="control-label mb-1">Is Discounted</label>
+                                            <select id="is_discounted" name="is_discounted" class="form-control">
+                                            @if($product_id->is_discounted=='1')
+                                                <option selected value="1">Yes</option>
+                                                <option value="0">No</option> 
+                                            @else    
+                                                <option value="1">Yes</option>
+                                                <option selected value="0">No</option>   
+                                            @endif                                         
+                                            </select>
+                                        </div>   
+
+                                             <!--is trending-->
+                                        <div class="col-md-3">           
+                                            <label for="is_trending" class="control-label mb-1">Is Trending</label>
+                                            <select id="is_trending" name="is_trending" class="form-control">
+                                            @if($product_id->is_trending=='1')
+                                                <option selected value="1">Yes</option>
+                                                <option value="0">No</option> 
+                                            @else    
+                                                <option value="1">Yes</option>
+                                                <option selected value="0">No</option>   
+                                            @endif                                            
+                                            </select>
+                                        </div>       
+                                              
+                                    </div>                  
+                                </div>  
+
                         </div>
                     </div>
                 </div>

@@ -6,6 +6,7 @@ use App\Models\Category;
 use App\Models\Color;
 use App\Models\Size;
 use App\Models\Brand;
+use App\Models\Tax;
 use App\Models\ProductAttributes;
 use App\Models\ProductImages;
 use Illuminate\Http\Request;
@@ -30,6 +31,7 @@ class ProductController extends Controller
         $colors= Color::where(['status'=>1])->get();
         $sizes= Size::where(['status'=>1])->get();
         $brands= Brand::where(['status'=>1])->get();
+        $taxes= Tax::where(['status'=>1])->get();
         $productattributes=[];
         $productimages=[];
        
@@ -38,7 +40,7 @@ class ProductController extends Controller
             request()->session()->flash('message','Error.Please activate and attach a Category');
         }
      
-    return view('admin.product.create',compact('categories','productattributes','colors','sizes','productimages','brands'));
+    return view('admin.product.create',compact('categories','productattributes','colors','sizes','productimages','brands','taxes'));
     }
 
     public function store(Request $request)
@@ -57,6 +59,14 @@ class ProductController extends Controller
         'technical_specification' => 'required',
         'uses' => 'required',
         'warranty' => 'required',
+        'lead_time' => 'required',
+        'tax_id' => 'required',
+        'is_promo' => 'required',
+        'is_featured' => 'required',
+        'is_discounted' => 'required',
+        'is_trending' => 'required',
+
+
     ]);
 
 
@@ -85,6 +95,12 @@ class ProductController extends Controller
         'technical_specification' => $request->technical_specification,
         'uses' => $request->uses,
         'warranty' => $request->warranty,
+        'lead_time' => $request->lead_time,
+        'tax_id' => $request->tax_id ,
+        'is_promo' => $request->is_promo,
+        'is_featured' => $request->is_featured,
+        'is_discounted' => $request->is_discounted,
+        'is_trending' => $request->is_trending,
     ]);
         $this->mutiple_images($product);
         $this->update_attributes($product);
@@ -114,10 +130,11 @@ class ProductController extends Controller
         $colors= Color::where(['status'=>1])->get();
         $sizes= Size::where(['status'=>1])->get();
         $brands= Brand::where(['status'=>1])->get();
+        $taxes= Tax::where(['status'=>1])->get();
         $productattributes=ProductAttributes::where(['products_id'=>$product_id->id])->get();
         $productimages=ProductImages::where(['products_id'=>$product_id->id])->get();
   
-    return view('admin.product.show',compact('product_id','categories','colors','sizes','productattributes','productimages','brands'));
+    return view('admin.product.show',compact('product_id','categories','colors','sizes','productattributes','productimages','brands','taxes'));
     }
 
     public function update(Product $product)
@@ -136,6 +153,12 @@ class ProductController extends Controller
             'technical_specification' => 'required',
             'uses' => 'required',
             'warranty' => 'required',
+            'lead_time' => 'required',
+            'tax_id' => 'required',
+            'is_promo' => 'required',
+            'is_featured' => 'required',
+            'is_discounted' => 'required',
+            'is_trending' => 'required',
     ]);
 
     
