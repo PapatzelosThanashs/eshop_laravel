@@ -12,7 +12,7 @@
             <div class="table-responsive table--no-card m-b-30">
                 <div class="card">
                     <div class="card-body">
-                        <form action="{{url('/admin/category/')}}/{{$category->id}}" method="post">
+                        <form action="{{url('/admin/category/')}}/{{$category->id}}" method="post" enctype="multipart/form-data">
                             @method('PATCH')
                             @csrf
                             <div class="form-group">
@@ -32,6 +32,30 @@
                                 <div class="alert alert-danger" role="alert">
                                     {{$message}}
 								</div>
+                                @enderror
+                            </div>
+
+                            <div class="form-group">
+                                <label for="category_parent_id">Parent Category</label>
+                                <select id="category_parent_id" name="category_parent_id"  class="form-control">
+                                @foreach($all_categories as $category_val)
+                                    @if($category_val->id==$category->category_parent_id)
+                                    <option selected value="{{$category_val->id}}">{{$category_val->category_name}}</option>
+                                    @else
+                                    <option value="{{$category_val->id}}">{{$category_val->category_name}}</option>
+                                    @endif
+                                @endforeach
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="category_image" class="control-label mb-1">Category Image</label>
+                                <img style="width:50px;height:50px" src="{{ asset('storage/product_photo/product_categories/'.$category->category_image) }}" alt="Italian Trulli">
+                                <input  id="category_image" name="category_image" type="file" class="form-control" aria-required="true" aria-invalid="false" required >
+                                @error('category_image')
+                                <div class="alert alert-danger" role="alert">
+                                    {{$message}}
+                                </div>
                                 @enderror
                             </div>
 

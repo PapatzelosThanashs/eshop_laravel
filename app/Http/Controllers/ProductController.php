@@ -98,6 +98,10 @@ class ProductController extends Controller
     {
 
         Product::destroy($product_id->id);
+        if(File::exists(public_path('storage/product_photo/product_images/'.$product_id->image))){
+            File::delete(public_path('storage/product_photo/product_images/'.$product_id->image));
+            
+        }
         request()->session()->flash('message','Product deleted');
     return back();
     }

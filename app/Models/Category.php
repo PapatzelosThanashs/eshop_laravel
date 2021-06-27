@@ -13,10 +13,22 @@ class Category extends Model
         'category_name',
         'category_slug',
         'status',
+        'category_parent_id',
+        'category_image',
     ];
 
     public function productAttr()
     {
         return $this->belongsTo(ProductAttributes::class);
+    }
+
+    public function parentName( $id){
+        $parent_name=Category::where(['id'=>$id])->first();
+        if($parent_name!=null){
+            return    $parent_name->category_name;
+        }else{
+            return    '';
+        }
+       
     }
 }

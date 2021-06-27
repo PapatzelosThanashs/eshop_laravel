@@ -23,6 +23,8 @@
                             <th>ID</th>
                             <th>Category Name</th>
                             <th>Category Slug</th>
+                            <th>Category Parent</th>
+                            <th>Category Image</th>
                             <th>Action</th>
                         </tr>
                     </thead>
@@ -32,6 +34,8 @@
                             <td>{{$category->id}}</td>
                             <td>{{$category->category_name}}</td>
                             <td>{{$category->category_slug}}</td>
+                            <td>{{$category->parentName($category->category_parent_id)}}</td>
+                            <td><img style="width:50px;height:50px" src="{{ asset('storage/product_photo/product_categories/'.$category->category_image) }}" alt="Italian Trulli"></td>
                             <td style="display: flex;">
                            
                             <form action="{{url('/admin/category/')}}/{{$category->id}}" method="post">

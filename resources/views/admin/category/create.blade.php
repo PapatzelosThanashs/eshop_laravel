@@ -12,7 +12,7 @@
             <div class="table-responsive table--no-card m-b-30">
                 <div class="card">
                     <div class="card-body">
-                        <form action="{{url('/admin/category')}}" method="post">
+                        <form action="{{url('/admin/category')}}" method="post" enctype="multipart/form-data">
                             @csrf
                             <div class="form-group">
                                 <label for="category_name" class="control-label mb-1">Category name</label>
@@ -34,6 +34,24 @@
                                 @enderror
                             </div>
 
+                            <div class="form-group">
+                                <label for="category_parent_id">Parent Category</label>
+                                <select id="category_parent_id" name="category_parent_id"  class="form-control">
+                                @foreach($categories as $category)
+                                    <option value="{{$category->id}}">{{$category->category_name}}</option>
+                                @endforeach
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="category_image" class="control-label mb-1">Category Image</label>
+                                <input  id="category_image" name="category_image" type="file" class="form-control" aria-required="true" aria-invalid="false" required >
+                                @error('category_image')
+                                <div class="alert alert-danger" role="alert">
+                                    {{$message}}
+                                </div>
+                                @enderror
+                            </div>
                             
                             <div>
                                 <button id="payment-button" type="submit" class="btn btn-lg btn-info btn-block">
