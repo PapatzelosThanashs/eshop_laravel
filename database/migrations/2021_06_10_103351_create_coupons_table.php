@@ -19,6 +19,9 @@ class CreateCouponsTable extends Migration
             $table->string('coupon_code');
             $table->string('coupon_value');
             $table->boolean('status')->default(false);
+            $table->enum('type', ['value', 'percent']);
+            $table->integer('min_order_amt');
+            $table->boolean('is_one_time')->default(false);
             $table->timestamps();
         });
     }

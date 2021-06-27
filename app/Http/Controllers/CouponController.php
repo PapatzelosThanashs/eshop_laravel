@@ -26,12 +26,19 @@ class CouponController extends Controller
         'coupon_title' => 'required',
         'coupon_code' => 'required|unique:coupons',
         'coupon_value'=>'required',
+        'type'=>'required',
+        'min_order_amt'=>'required',
+        'is_one_time'=>'',
     ]);
+    
 
         Coupon::create([
         'coupon_title' => $request->coupon_title,
         'coupon_code' => $request->coupon_code,
         'coupon_value' => $request->coupon_value,
+        'type'=>$request->type,
+        'min_order_amt'=>$request->min_order_amt,
+        'is_one_time'=>$request->is_one_time,
     ]);
 
         $request->session()->flash('message','Coupon added');
@@ -63,6 +70,9 @@ class CouponController extends Controller
             'coupon_title' => 'required',
             'coupon_code' => 'required',
             'coupon_value'=>'required',
+            'type'=>'required',
+            'min_order_amt'=>'required',
+            'is_one_time'=>'required',
     ]);
 
         $coupon->update($data);
