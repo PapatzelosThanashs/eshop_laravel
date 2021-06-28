@@ -43,7 +43,6 @@
         <script src="{{asset('ckeditor5-build-classic/ckeditor.js')}}"> </script>
       
 
-    
 
 </head>
 
@@ -102,6 +101,10 @@
                             <a href="{{route('product.index')}}">
                             <i class="fas fa-archive"></i>Product</a>
                         </li>
+                        <li class="@yield('active_user')">
+                            <a href="{{route('user.index')}}">
+                            <i class="fas fa-user"></i>User</a>
+                        </li>
                     </ul>
                 </div>
             </nav>
@@ -149,6 +152,10 @@
                         <li class="@yield('active_product')">
                             <a href="{{route('product.index')}}">
                             <i class="fas fa-archive"></i>Product</a>
+                        </li>
+                        <li class="@yield('active_user')">
+                            <a href="{{route('user.index')}}">
+                            <i class="fas fa-user"></i>User</a>
                         </li>
                     </ul>
                 </nav>

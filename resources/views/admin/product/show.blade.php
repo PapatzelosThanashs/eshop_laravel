@@ -266,4 +266,5 @@
         </div>
                             
      </form>
+     <script src="{{asset('admin_assets/js/ckeditor_fields.js')}}"> </script>
 @endsection
