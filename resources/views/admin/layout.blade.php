@@ -39,7 +39,9 @@
     <!-- admin attribute dynamic form custom js-->   
     <script src="{{asset('admin_assets/js/attribute_dynamic_form.js')}}"> </script>
     
-    
+        <!-- ckeditor js-->   
+        <script src="{{asset('ckeditor5-build-classic/ckeditor.js')}}"> </script>
+      
 
     
 
