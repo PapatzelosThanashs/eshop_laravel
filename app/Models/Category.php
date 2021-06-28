@@ -15,6 +15,7 @@ class Category extends Model
         'status',
         'category_parent_id',
         'category_image',
+        'is_home',
     ];
 
     public function productAttr()

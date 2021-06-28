@@ -26,6 +26,7 @@ class BrandController extends Controller
         $request->validate([
         'name' => 'required',
         'image' => 'required|mimes:jpg,bmp,png,jpeg',
+        'is_home'=>'',
     ]);
 
         if($request->hasfile('image')){
@@ -38,6 +39,7 @@ class BrandController extends Controller
         Brand::create([
         'name' => $request->name,
         'image' =>  $image_name,
+        'is_home'=> $request->is_home,
     ]);
 
         $request->session()->flash('message','Brand added');
@@ -69,6 +71,7 @@ class BrandController extends Controller
         $data=request()->validate([
             'name' => 'required',
             'image' => 'mimes:jpg,bmp,png,jpeg',
+            'is_home'=>'',
     ]);
 
         if(request()->hasfile('image')){
@@ -88,9 +91,16 @@ class BrandController extends Controller
             $data['image']=$brand->image;
         }
 
+        if(isset(request()->is_home)){
+            $data['is_home']=1;
+        }else{
+            $data['is_home']=0;  
+        }
+
         $brand->update($data);
 
         request()->session()->flash('message','Brand edited');
+
 
         return redirect('admin/brand');
     }

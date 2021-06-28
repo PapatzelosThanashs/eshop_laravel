@@ -53,6 +53,8 @@
                                 @enderror
                             </div>
                             
+                            <input type="checkbox" name="is_home" id="is_home" value="1">Show in Home Page
+                            
                             <div>
                                 <button id="payment-button" type="submit" class="btn btn-lg btn-info btn-block">
                                     <i class="fa fa-check" aria-hidden="true"></i>

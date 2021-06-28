@@ -58,8 +58,11 @@
                                 </div>
                                 @enderror
                             </div>
-
-                            
+                            @if($category->is_home==true)
+                            <input  checked type="checkbox" name="is_home" id="is_home" >Show in Home Page
+                            @else
+                            <input type="checkbox" name="is_home" id="is_home" >Show in Home Page
+                            @endif
                             <div>
                                 <button id="payment-button" type="submit" class="btn btn-lg btn-info btn-block">
                                     <i class="fa fa-check" aria-hidden="true"></i>

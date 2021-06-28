@@ -18,6 +18,7 @@ class CreateBrandsTable extends Migration
             $table->string('name');
             $table->string('image');
             $table->boolean('status')->default(false);
+            $table->boolean('is_home')->default(false)->nullable();
             $table->timestamps();
         });
     }

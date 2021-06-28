@@ -20,6 +20,7 @@ class CreateCategoriesTable extends Migration
             $table->integer('category_parent_id')->nullable();
             $table->string('category_image');
             $table->boolean('status')->default(false);
+            $table->boolean('is_home')->default(false)->nullable();
             $table->timestamps();
         });
     }

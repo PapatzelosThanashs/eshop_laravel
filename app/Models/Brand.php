@@ -13,5 +13,6 @@ class Brand extends Model
         'name',
         'image',
         'status',
+        'is_home',
     ];
 }
