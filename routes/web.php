@@ -29,6 +29,8 @@ Route::get('/', function () {
 Route::get('/admin',[AdminController::class,'index']);
 Route::post('/admin/auth',[AdminController::class,'auth'])->name('admin.auth');
 
+
+/* admin functionality */
 Route::middleware(['AdminAuth'])->group(function () {
     Route::get('/admin/dashboard',[AdminController::class,'dashboard'])->name('dashboard.index');
     Route::get('/admin/logout',[AdminController::class,'logout']);
@@ -60,7 +62,7 @@ Route::middleware(['AdminAuth'])->group(function () {
     Route::patch('/admin/size/{size}',[SizeController::class,'update']);
     Route::get('/admin/size/{size_id}/{status}',[SizeController::class,'status']);
 
-     /* crud admin color routes */
+    /* crud admin color routes */
     Route::get('/admin/color',[ColorController::class,'index'])->name('color.index');
     Route::get('/admin/color/create',[ColorController::class,'create']);
     Route::post('/admin/color',[ColorController::class,'store']);
@@ -69,7 +71,7 @@ Route::middleware(['AdminAuth'])->group(function () {
     Route::patch('/admin/color/{color}',[ColorController::class,'update']);
     Route::get('/admin/color/{color_id}/{status}',[ColorController::class,'status']);
 
-     /* crud admin product routes */
+    /* crud admin product routes */
     Route::get('/admin/product',[ProductController::class,'index'])->name('product.index');
     Route::get('/admin/product/create',[ProductController::class,'create']);
     Route::post('/admin/product',[ProductController::class,'store']);
@@ -89,7 +91,7 @@ Route::middleware(['AdminAuth'])->group(function () {
     Route::patch('/admin/brand/{brand}',[BrandController::class,'update']);
     Route::get('/admin/brand/{brand_id}/{status}',[BrandController::class,'status']);
 
-           /* crud admin tax routes */
+    /* crud admin tax routes */
     Route::get('/admin/tax',[TaxController::class,'index'])->name('tax.index');
     Route::get('/admin/tax/create',[TaxController::class,'create']);
     Route::post('/admin/tax',[TaxController::class,'store']);
@@ -98,7 +100,7 @@ Route::middleware(['AdminAuth'])->group(function () {
     Route::patch('/admin/tax/{tax}',[TaxController::class,'update']);
     Route::get('/admin/tax/{tax_id}/{status}',[TaxController::class,'status']);
 
-            /* crud admin User routes */
+    /* crud admin User routes */
     Route::get('/admin/user',[UserController::class,'index'])->name('user.index');
     Route::get('/admin/user/{user_id}',[UserController::class,'show']);
     Route::get('/admin/user/{user_id}/{status}',[UserController::class,'status']);

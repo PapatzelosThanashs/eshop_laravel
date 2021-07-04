@@ -20,7 +20,6 @@ class SizeController extends Controller
 
     public function store(Request $request)
     {
-     
         $request->validate([
         'size' => 'required|unique:sizes',
     ]);
@@ -44,10 +43,7 @@ class SizeController extends Controller
 
     public function show(Size $size_id)
     {
-      
         $size=Size::where(['id'=>$size_id->id])->first();
-       
-    
         return view('admin.size.show',compact('size'));
     }
 
@@ -56,7 +52,7 @@ class SizeController extends Controller
        
         $data=request()->validate([
             'size' => 'required',
-    ]);
+        ]);
 
         $size->update($data);
 
@@ -67,14 +63,9 @@ class SizeController extends Controller
 
     public function status(Size $size_id,$status)
     {
-       
-        
-
         $status=!$status;
         $size_id->update(['status'=>$status]);
-
         request()->session()->flash('message','Size status updated');
-
         return redirect('admin/size');
     }
 }

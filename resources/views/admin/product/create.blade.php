@@ -2,7 +2,7 @@
 @section('title', 'Create Product')
 @section('content')
 
-    <h1>Manage Product</h1>
+    <h1>Create Product</h1>
     <a href="{{url('admin/product')}}">
     <button type="button" class="btn btn-success" style="margin-bottom:10px;margin-top:10px;">Back</button>
     </a>
@@ -88,7 +88,7 @@
                                 <!--Short desc -->
                                 <div class="form-group">
                                 <label for="short_desc" class="control-label mb-1">Short desc</label>
-                                    <input id="short_desc" name="short_desc" type="text" class="form-control" aria-required="true" aria-invalid="false" required >
+                                    <textarea id="short_desc" name="short_desc" type="text" class="form-control" aria-required="true" aria-invalid="false" ></textarea>
                                     @error('short_desc')
                                     <div class="alert alert-danger" role="alert">
                                         {{$message}}
@@ -98,7 +98,7 @@
                                 <!--Desc -->
                                 <div class="form-group">
                                 <label for="desc" class="control-label mb-1">Desc</label>
-                                    <input id="desc" name="desc" type="text" class="form-control" aria-required="true" aria-invalid="false" required >
+                                    <textarea id="desc" name="desc" type="text" class="form-control" aria-required="true" aria-invalid="false"  ></textarea>
                                     @error('desc')
                                     <div class="alert alert-danger" role="alert">
                                         {{$message}}
@@ -118,7 +118,7 @@
                                 <!--Technical Specification -->
                                 <div class="form-group">
                                 <label for="technical_specification" class="control-label mb-1">Technical Specification</label>
-                                    <input id="technical_specification" name="technical_specification" type="text" class="form-control" aria-required="true" aria-invalid="false" required >
+                                    <textarea id="technical_specification" name="technical_specification" type="text" class="form-control" aria-required="true" aria-invalid="false"  ></textarea>
                                     @error('technical_specification')
                                     <div class="alert alert-danger" role="alert">
                                         {{$message}}
@@ -218,7 +218,6 @@
                                               
                                     </div>                  
                                 </div>   
-
                         </div>
                     </div>
                 </div>

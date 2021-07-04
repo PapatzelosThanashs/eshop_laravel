@@ -34,7 +34,7 @@
                                     @enderror
                                 </div>
                                 
-                                <input type="checkbox" name="is_home" id="is_home" >Show in Home Page
+                                <input type="checkbox" name="is_home" id="is_home" value="1">Show in Home Page
                             
 
                             

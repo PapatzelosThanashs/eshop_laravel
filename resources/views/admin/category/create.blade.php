@@ -2,7 +2,7 @@
 @section('title', 'Create Category')
 @section('content')
 
-    <h1>Manage Category</h1>
+    <h1>Create Category</h1>
     <a href="{{url('admin/category')}}">
     <button type="button" class="btn btn-success" style="margin-bottom:10px;margin-top:10px;">Back</button>
     </a>

@@ -2,7 +2,7 @@
 @section('title', 'Create Size')
 @section('content')
 
-    <h1>Manage Size</h1>
+    <h1>Create Size</h1>
     <a href="{{url('admin/size')}}">
     <button type="button" class="btn btn-success" style="margin-bottom:10px;margin-top:10px;">Back</button>
     </a>

@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 use App\Models\Color;
-
 use Illuminate\Http\Request;
 
 class ColorController extends Controller
@@ -21,14 +20,13 @@ class ColorController extends Controller
 
     public function store(Request $request)
     {
-     
         $request->validate([
         'color' => 'required|unique:colors',
-    ]);
+        ]);
 
-         Color::create([
+        Color::create([
         'color' => $request->color,
-    ]);
+        ]);
 
         $request->session()->flash('message','Color added');
 
@@ -57,7 +55,7 @@ class ColorController extends Controller
        
         $data=request()->validate([
             'color' => 'required',
-    ]);
+        ]);
 
         $color->update($data);
 
@@ -68,14 +66,9 @@ class ColorController extends Controller
 
     public function status(Color $color_id,$status)
     {
-       
-        
-
         $status=!$status;
         $color_id->update(['status'=>$status]);
-
         request()->session()->flash('message','Color status updated');
-
         return redirect('admin/color');
     }
 }

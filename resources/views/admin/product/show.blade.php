@@ -90,7 +90,7 @@
                             <!--Short desc -->
                             <div class="form-group">
                             <label for="short_desc" class="control-label mb-1">Short desc</label>
-                                <input id="short_desc" name="short_desc" type="text" class="form-control" aria-required="true" aria-invalid="false" required value="{{$product_id->short_desc ?? ''}}">
+                                <textarea id="short_desc" name="short_desc" type="text" class="form-control" aria-required="true" aria-invalid="false" >{{$product_id->short_desc ?? ''}}</textarea>
                                 @error('short_desc')
                                 <div class="alert alert-danger" role="alert">
                                     {{$message}}
@@ -100,7 +100,7 @@
                             <!--Desc -->
                             <div class="form-group">
                             <label for="desc" class="control-label mb-1">Desc</label>
-                                <input id="desc" name="desc" type="text" class="form-control" aria-required="true" aria-invalid="false" required value="{{$product_id->desc ?? ''}}">
+                                <textarea id="desc" name="desc" type="text" class="form-control" aria-required="true" aria-invalid="false"  >{{$product_id->desc ?? ''}}</textarea>
                                 @error('desc')
                                 <div class="alert alert-danger" role="alert">
                                     {{$message}}
@@ -120,7 +120,7 @@
                             <!--Technical Specification -->
                             <div class="form-group">
                             <label for="technical_specification" class="control-label mb-1">Technical Specification</label>
-                                <input id="technical_specification" name="technical_specification" type="text" class="form-control" aria-required="true" aria-invalid="false" required value="{{$product_id->technical_specification ?? ''}}">
+                                <textarea id="technical_specification" name="technical_specification" type="text" class="form-control" aria-required="true" aria-invalid="false" >{{$product_id->technical_specification ?? ''}}</textarea>
                                 @error('technical_specification')
                                 <div class="alert alert-danger" role="alert">
                                     {{$message}}

@@ -2,7 +2,7 @@
 @section('title', 'Create Tax')
 @section('content')
 
-    <h1>Manage Tax</h1>
+    <h1>Create Tax</h1>
     <a href="{{url('admin/tax')}}">
     <button type="button" class="btn btn-success" style="margin-bottom:10px;margin-top:10px;">Back</button>
     </a>

@@ -21,7 +21,7 @@ class ProductController extends Controller
     public function index()
     {
         $product= Product::all(); 
-    return view('admin.product.product',compact('product'));
+        return view('admin.product.product',compact('product'));
     }
 
 
@@ -40,7 +40,7 @@ class ProductController extends Controller
             request()->session()->flash('message','Error.Please activate and attach a Category');
         }
      
-    return view('admin.product.create',compact('categories','productattributes','colors','sizes','productimages','brands','taxes'));
+        return view('admin.product.create',compact('categories','productattributes','colors','sizes','productimages','brands','taxes'));
     }
 
     public function store(Request $request)
@@ -64,9 +64,7 @@ class ProductController extends Controller
         'is_featured' => 'required',
         'is_discounted' => 'required',
         'is_trending' => 'required',
-
-
-    ]);
+        ]);
 
 
 
@@ -74,8 +72,7 @@ class ProductController extends Controller
             $image=$request->file('image');
             $ext=$image->extension();
             $image_name=time().'.'.$ext;
-            $image->storeAs('public/product_photo/product_images',$image_name);
-           
+            $image->storeAs('public/product_photo/product_images',$image_name);  
         }
 
              
@@ -100,12 +97,13 @@ class ProductController extends Controller
         'is_featured' => $request->is_featured,
         'is_discounted' => $request->is_discounted,
         'is_trending' => $request->is_trending,
-    ]);
+        ]);
+
         $this->mutiple_images($product);
         $this->update_attributes($product);
 
         $request->session()->flash('message','Product added');
-    return redirect('admin/product');
+        return redirect('admin/product');
     }
  
 
@@ -117,14 +115,14 @@ class ProductController extends Controller
             File::delete(public_path('storage/product_photo/product_images/'.$product_id->image));
             
         }
+        
         request()->session()->flash('message','Product deleted');
-    return back();
+
+        return back();
     }
 
     public function show(Product $product_id)
     {
-        //$product=Product::where(['id'=>$product_id->id])->first();
-       
         $categories=Category::where(['status'=>1])->get();
         $colors= Color::where(['status'=>1])->get();
         $sizes= Size::where(['status'=>1])->get();
@@ -133,7 +131,7 @@ class ProductController extends Controller
         $productattributes=ProductAttributes::where(['products_id'=>$product_id->id])->get();
         $productimages=ProductImages::where(['products_id'=>$product_id->id])->get();
   
-    return view('admin.product.show',compact('product_id','categories','colors','sizes','productattributes','productimages','brands','taxes'));
+        return view('admin.product.show',compact('product_id','categories','colors','sizes','productattributes','productimages','brands','taxes'));
     }
 
     public function update(Product $product)
@@ -158,7 +156,7 @@ class ProductController extends Controller
             'is_featured' => 'required',
             'is_discounted' => 'required',
             'is_trending' => 'required',
-    ]);
+        ]);
 
     
 
@@ -186,7 +184,8 @@ class ProductController extends Controller
         
         $product->update($data);
         request()->session()->flash('message','Product edited');
-    return redirect('admin/product');
+
+        return redirect('admin/product');
     }
 
     public function status(Product $product_id,$status)
@@ -195,7 +194,8 @@ class ProductController extends Controller
         $status=!$status;
         $product_id->update(['status'=>$status]);
         request()->session()->flash('message','Product status updated');
-    return redirect('admin/product');
+
+        return redirect('admin/product');
     }
 
     public function removeAttr(ProductAttributes $productattribute_id){
@@ -203,7 +203,8 @@ class ProductController extends Controller
         ProductAttributes::destroy($productattribute_id->id);
         File::delete(public_path('storage/product_photo/attribute_images/'.$productattribute_id->image_attr));
         request()->session()->flash('message','Attribute deleted');
-    return redirect()->to(url()->previous()."#repeat"); 
+
+        return redirect()->to(url()->previous()."#repeat"); 
     }
 
     public function update_attributes(Product $product){
@@ -368,6 +369,6 @@ class ProductController extends Controller
         File::delete(public_path('storage/product_photo/multiple_images/'.$productimage_id->images));
         request()->session()->flash('message_image','Image deleted');
 
-    return redirect()->to(url()->previous()."#repeat_image"); 
+        return redirect()->to(url()->previous()."#repeat_image"); 
     }
 }

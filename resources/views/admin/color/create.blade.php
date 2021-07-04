@@ -2,7 +2,7 @@
 @section('title', 'Create Color')
 @section('content')
 
-    <h1>Manage Color</h1>
+    <h1>Create Color</h1>
     <a href="{{url('admin/color')}}">
     <button type="button" class="btn btn-success" style="margin-bottom:10px;margin-top:10px;">Back</button>
     </a>

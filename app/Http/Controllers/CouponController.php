@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 use App\Models\Coupon;
-
 use Illuminate\Http\Request;
 
 class CouponController extends Controller
@@ -25,11 +24,11 @@ class CouponController extends Controller
         $request->validate([
         'coupon_title' => 'required',
         'coupon_code' => 'required|unique:coupons',
-        'coupon_value'=>'required',
+        'coupon_value'=>'required|integer',
         'type'=>'required',
-        'min_order_amt'=>'required',
-        'is_one_time'=>'',
-    ]);
+        'min_order_amt'=>'required|integer',
+        'is_one_time'=>'required',
+        ]);
     
 
         Coupon::create([
@@ -39,7 +38,7 @@ class CouponController extends Controller
         'type'=>$request->type,
         'min_order_amt'=>$request->min_order_amt,
         'is_one_time'=>$request->is_one_time,
-    ]);
+         ]);
 
         $request->session()->flash('message','Coupon added');
 
@@ -55,11 +54,8 @@ class CouponController extends Controller
     }
 
     public function show(Coupon $coupon_id)
-    {
-      
+    { 
         $coupon=Coupon::where(['id'=>$coupon_id->id])->first();
-       
-    
         return view('admin.coupon.show',compact('coupon'));
     }
 
@@ -69,11 +65,11 @@ class CouponController extends Controller
         $data=request()->validate([
             'coupon_title' => 'required',
             'coupon_code' => 'required',
-            'coupon_value'=>'required',
+            'coupon_value'=>'required|integer',
             'type'=>'required',
-            'min_order_amt'=>'required',
+            'min_order_amt'=>'required|integer',
             'is_one_time'=>'required',
-    ]);
+        ]);
 
         $coupon->update($data);
 
@@ -84,14 +80,9 @@ class CouponController extends Controller
 
     public function status(Coupon $coupon_id,$status)
     {
-       
-        
-
         $status=!$status;
         $coupon_id->update(['status'=>$status]);
-
         request()->session()->flash('message','Coupon status updated');
-
         return redirect('admin/coupon');
     }
 }

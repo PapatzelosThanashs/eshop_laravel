@@ -30,7 +30,7 @@ class CategoryController extends Controller
         'category_parent_id'=>'',
         'category_image'=>'mimes:jpg,bmp,png,jpeg',
         'is_home'=>'',
-    ]);
+        ]);
 
         if($request->hasfile('category_image')){
             $image=$request->file('category_image');
@@ -45,7 +45,7 @@ class CategoryController extends Controller
         'category_parent_id'=>$request->category_parent_id,
         'category_image'=>$image_name,
         'is_home'=>$request->is_home,
-    ]);
+        ]);
 
         $request->session()->flash('message','Category added');
 
@@ -67,8 +67,8 @@ class CategoryController extends Controller
     public function show(Category $category_id)
     {
       
-       $category=Category::where(['id'=>$category_id->id])->first();
-       $all_categories=Category::all()->except($category->id);
+        $category=Category::where(['id'=>$category_id->id])->first();
+        $all_categories=Category::all()->except($category->id);
     
         return view('admin.category.show',compact('category','all_categories'));
     }
@@ -82,7 +82,7 @@ class CategoryController extends Controller
         'category_parent_id'=>'',
         'category_image'=>'mimes:jpg,bmp,png,jpeg',
         'is_home'=>'',
-    ]);
+        ]);
 
      /** if user input new file store new image else store the old */
      if(request()->hasfile('category_image')){
@@ -102,10 +102,11 @@ class CategoryController extends Controller
     }else{
         $data['category_image']=$category->category_image;
     }
+
     if(isset(request()->is_home)){
-       $data['is_home']=1;
+        $data['is_home']=1;
     }else{
-    $data['is_home']=0;  
+        $data['is_home']=0;  
     }
 
 

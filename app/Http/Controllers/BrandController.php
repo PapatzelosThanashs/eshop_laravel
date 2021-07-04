@@ -27,7 +27,7 @@ class BrandController extends Controller
         'name' => 'required',
         'image' => 'required|mimes:jpg,bmp,png,jpeg',
         'is_home'=>'',
-    ]);
+        ]);
 
         if($request->hasfile('image')){
             $image=$request->file('image');
@@ -40,7 +40,7 @@ class BrandController extends Controller
         'name' => $request->name,
         'image' =>  $image_name,
         'is_home'=> $request->is_home,
-    ]);
+        ]);
 
         $request->session()->flash('message','Brand added');
 
@@ -58,10 +58,7 @@ class BrandController extends Controller
 
     public function show(Brand $brand_id)
     {
-      
         $brand=Brand::where(['id'=>$brand_id->id])->first();
-
-    
         return view('admin.brand.show',compact('brand'));
     }
 
@@ -72,7 +69,7 @@ class BrandController extends Controller
             'name' => 'required',
             'image' => 'mimes:jpg,bmp,png,jpeg',
             'is_home'=>'',
-    ]);
+        ]);
 
         if(request()->hasfile('image')){
             $OldBrandImage=$brand->image;
@@ -107,14 +104,9 @@ class BrandController extends Controller
 
     public function status(Brand $brand_id,$status)
     {
-       
-        
-
         $status=!$status;
         $brand_id->update(['status'=>$status]);
-
         request()->session()->flash('message','Brand status updated');
-
         return redirect('admin/brand');
     }
 }

@@ -2,7 +2,7 @@
 @section('title', 'Create Coupon')
 @section('content')
 
-    <h1>Manage Coupon</h1>
+    <h1>Create Coupon</h1>
     <a href="{{url('admin/coupon')}}">
     <button type="button" class="btn btn-success" style="margin-bottom:10px;margin-top:10px;">Back</button>
     </a>
@@ -51,7 +51,7 @@
                                     </div>
 
                                     <div class="col-md-6">   
-                                    <label for="type">type</label><BR>
+                                    <label for="type">Type</label><BR>
                                     <select id="type" name="type" class="form-control">
                                     <option value="" disabled selected>Select type</option>
                                     <option value="value">Value</option>
