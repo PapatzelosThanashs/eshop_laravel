@@ -1,132 +1,114 @@
 <?php
+declare(strict_types=1);
 
 namespace App\Http\Controllers;
-use App\Models\Category;
-use Illuminate\Support\Facades\File; 
 
-use Illuminate\Http\Request;
+use App\Http\Requests\Category\CategoryCreateRequest;
+use App\Http\Requests\Category\CategoryUpdateRequest;
+use App\Interfaces\ICategory;
+use App\Models\Category;
+use Illuminate\Http\RedirectResponse;
+
 
 class CategoryController extends Controller
 {
+    /**
+     * @var ICategory
+     */
+    private $categoryService;
+
+    /**
+     * CategoryController constructor.
+     */
+    public function __construct(ICategory $categoryService)
+    {
+        $this->categoryService = $categoryService;
+    }
 
     public function index()
     {
-        $categories= Category::all();
-        return view('admin.category.category',compact('categories'));
+        $categories = $this->categoryService->getPaginateCategories();
+        return view('admin.category.category')
+            ->with(compact('categories'));
     }
-
 
     public function create()
     {
-        $categories= Category::all();
-        return view('admin.category.create',compact('categories'));
+        $categories = $this->categoryService->getLimitedCategories(100);
+        return view('admin.category.create')
+            ->with(compact('categories'));
     }
 
-    public function store(Request $request)
+    public function store(CategoryCreateRequest $request)
     {
-        $request->validate([
-        'category_name' => 'required',
-        'category_slug' => 'required|unique:categories',
-        'category_parent_id'=>'',
-        'category_image'=>'mimes:jpg,bmp,png,jpeg',
-        'is_home'=>'',
-        ]);
+        $imageName = $this->categoryService->saveCategoryImageFile($request);
 
-        if($request->hasfile('category_image')){
-            $image=$request->file('category_image');
-            $ext=$image->extension();
-            $image_name=time().'.'.$ext;
-            $image->storeAs('public/product_photo/product_categories',$image_name);
-        
+        $categories = $this->categoryService->createCategory($request, $imageName);
+
+        if (!isset($categories)) {
+            return back()->with('error', 'Failed to create Category');
         }
-        Category::create([
-        'category_name' => $request->category_name,
-        'category_slug' => $request->category_slug,
-        'category_parent_id'=>$request->category_parent_id,
-        'category_image'=>$image_name,
-        'is_home'=>$request->is_home,
-        ]);
 
-        $request->session()->flash('message','Category added');
+        request()->session()->flash('message', 'Category added');
 
         return redirect('admin/category');
     }
- 
 
-    public function delete(Category $category_id)
+
+    public function delete(Category $category): RedirectResponse
     {
-        Category::destroy($category_id->id);
-        if(File::exists(public_path('storage/product_photo/product_categories/'.$category_id->category_image))){
-            File::delete(public_path('storage/product_photo/product_categories/'.$category_id->category_image));
-            
+        if (!isset($category)) {
+            return back()->with('error', 'Failed to delete Category');
         }
-        request()->session()->flash('message','Category deleted');
+
+        $deleted = $this->categoryService->deleteCategory($category);
+
+        if (!$deleted) {
+            return back()->with('error', 'Failed to delete Category');
+        }
+
+        request()->session()->flash('message', 'Category deleted!');
         return back();
     }
 
-    public function show(Category $category_id)
+    public function show(Category $category)
     {
-      
-        $category=Category::where(['id'=>$category_id->id])->first();
-        $all_categories=Category::all()->except($category->id);
-    
-        return view('admin.category.show',compact('category','all_categories'));
+        $categories = $this->categoryService->getLimitedCategories(100)
+            ->except($category->id);
+
+        return view('admin.category.show')
+            ->with(compact('category'))
+            ->with(compact('categories'));
     }
 
-    public function update(Category $category)
+    public function update(CategoryUpdateRequest $request, Category $category)
     {
-       
-        $data=request()->validate([
-        'category_name' => '',
-        'category_slug' => '',
-        'category_parent_id'=>'',
-        'category_image'=>'mimes:jpg,bmp,png,jpeg',
-        'is_home'=>'',
-        ]);
+        $result = $this->categoryService->updateCategory($request, $category);
 
-     /** if user input new file store new image else store the old */
-     if(request()->hasfile('category_image')){
-        $OldImage=$category->category_image;
-    
-        if(File::exists(public_path('storage/product_photo/product_categories/'.$OldImage))){
-            File::delete(public_path('storage/product_photo/product_categories/'.$OldImage));
-            
+        if (!$result) {
+            return back()->with('error', 'Failed to update category!');
         }
 
-        $image=request()->file('category_image');
-        $ext=$image->extension();
-        $image_name=time().'.'.$ext;
-        $image->storeAs('public/product_photo/product_categories',$image_name);
-        $data['category_image']=$image_name;
-    
-    }else{
-        $data['category_image']=$category->category_image;
-    }
-
-    if(isset(request()->is_home)){
-        $data['is_home']=1;
-    }else{
-        $data['is_home']=0;  
-    }
-
-
-        $category->update($data);
-
-        request()->session()->flash('message','Category edited');
+        request()->session()->flash('message', 'Category edited');
 
         return redirect('admin/category');
     }
 
 
-    public function status(Category $category_id,$status)
+    public function status(Category $category, int $status)
     {
-       
+        $status = !$status;
 
-        $status=!$status;
-        $category_id->update(['status'=>$status]);
+        if (!$category) {
+            return back()->with('error', 'Failed to update category status doesnt exist!');
+        }
 
-        request()->session()->flash('message','Category status updated');
+        if ($category->update(['status' => $status])) {
+            request()->session()->flash('message', 'Category status updated');
 
-        return redirect('admin/category');
+            return redirect('admin/category');
+        }
+
+        return back()->with('error', 'Failed to update category doesnt exist!');
     }
 }

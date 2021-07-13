@@ -2,6 +2,11 @@
 
 namespace App\Providers;
 
+use App\Interfaces\IAdmin;
+use App\Interfaces\ICategory;
+use App\Services\AdminService;
+use App\Services\CategoryService;
+use Illuminate\Pagination\Paginator;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -13,7 +18,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
+        $this->app->bind(IAdmin::class, AdminService::class);
+        $this->app->bind(ICategory::class, CategoryService::class);
     }
 
     /**
@@ -23,6 +29,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        Paginator::useBootstrap();
     }
 }
