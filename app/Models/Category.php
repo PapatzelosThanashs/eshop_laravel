@@ -23,13 +23,13 @@ class Category extends Model
         return $this->belongsTo(ProductAttributes::class);
     }
 
-    public function parentName( $id){
-        $parent_name=Category::where(['id'=>$id])->first();
-        if($parent_name!=null){
-            return    $parent_name->category_name;
-        }else{
-            return    '';
+    public function parentName($id)
+    {
+        $parent_name = Category::where(['id' => $id])->first();
+        if ($parent_name != null) {
+            return $parent_name->category_name;
+        } else {
+            return '';
         }
-       
     }
 }
